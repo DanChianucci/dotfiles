@@ -8,8 +8,8 @@ fi
 [[ $- != *i* ]] && return
 
 # Source local Configs
-if [[ -d ~/bash_config/bashrc.d && -r ~/bash_config/bashrc.d && -x ~/bash_config/bashrc.d ]]; then
-  for file in ~/bash_config/bashrc.d/*.sh; do
+if [[ -d ~/.config/bashrc.d && -r ~/.config/bashrc.d && -x ~/.config/bashrc.d ]]; then
+  for file in ~/.config/bashrc.d/*.sh; do
      [[ -f "${file}" && -r "${file}" ]] && source "${file}"
   done
 fi

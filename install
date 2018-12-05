@@ -1,1 +1,14 @@
 #!/usr/bin/env bash
+for filename in {..?,.[!.],}*; do
+  if [ "$filename" = "install" ]; then
+    continue
+  elif [ -f $filename ]; then
+    echo "Installing ${filename} to ~/${filename}";
+    ln -s "$(realpath $filename)" ~/$filename;
+
+  elif [ -d $filename ]; then
+    echo "Installing ${filename}/ to ~/config/${filename}";
+    ln -s "$(realpath $filename)" ~/.config/$filename;
+  fi;
+
+done

@@ -7,7 +7,7 @@ shopt -s histappend
 
 
 
-{ test -r ~/bash_config/.dircolors && eval "$(dircolors ~/bash_config/.dircolors)"; } &>/dev/null
+{ test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"; } &>/dev/null
 
 export CDPATH=".:~"
 export HISTTIMEFORMAT='%T     '
@@ -15,11 +15,9 @@ export HISTIGNORE='ls:pwd:cls:clear:clc:history:ll:histg:cd'
 export HISTCONTROL='ignoreboth'
 
 
-export PYTHONSTARTUP=$HOME/bash_config/.pythonstartup
+export PYTHONSTARTUP=$HOME/.pythonstartup
 
-
-# shellcheck source=/home/chianucci/bash_config/bashrc.d/git_prompt.bash
-. ~/bash_config/bashrc.d/git_prompt.bash
+source ${HOME}/.config/bashrc.d/git_prompt.bash
 
 set_prompt () {
     local last_command=$?
@@ -83,4 +81,4 @@ set_prompt () {
 }
 PROMPT_COMMAND='set_prompt'
 
-bind -f ~/bash_config/.inputrc
+bind -f ~/.inputrc

@@ -2,7 +2,7 @@
 
 
 if [[ "$-" == *i* ]] ; then  #Only Load during Interactive Shells
-  module use ~/bash_config/modulefiles
+  module use ~/.config/modulefiles
   module purge &> /dev/null
   module load slurm              \
               xcm                \

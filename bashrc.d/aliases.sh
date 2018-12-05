@@ -18,7 +18,6 @@ alias l="ls -CF"
 alias l.="ls -d .*"
 alias tree="tree -Csuh"
 
-alias bashrc="emacs -Q ~/bash_config"
 alias reload="reset && source ~/.bashrc"
 
 alias emacs="emacs -Q"

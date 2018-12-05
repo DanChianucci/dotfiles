@@ -44,15 +44,11 @@ set_prompt () {
     PS1+=$color_off
 
     num_jobs=$(count_jobs)
-    if [[ $num_jobs -gt 0 ]]; then
+    if [[ $num_jobs = "?" || $num_jobs -gt 0 ]]; then
         PS1+=$color_purple
         PS1+="[$num_jobs]"
         PS1+=$color_off
     fi
-
-    # add purple exit code if non-zero
-
-
 
     PS1+=$color_off
     PS1+=": "

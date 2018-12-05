@@ -1,0 +1,21 @@
+#%Module
+proc ModulesHelp { } {
+    global ver
+
+    puts stderr "Xelic Coverage"
+    puts stderr "\nVersion ${ver}\n"
+}
+
+
+conflict xcov
+module load python
+
+# for Tcl script use only
+set     ver          "local"
+set     basepath     "/home/chianucci/xcov"
+
+
+setenv XCOV_ROOT ${basepath}
+setenv XCOV_BIN  ${basepath}/src/bin
+module-whatis   "XCov ${ver}"
+prepend-path PATH ${basepath}/src/bin

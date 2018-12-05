@@ -1,0 +1,65 @@
+[core]
+  autocrlf = true
+	editor   = vim +star 
+
+[user]
+	name  = chianucci
+	email = chianucci@xelic.com
+
+[alias]
+  co    = checkout
+  st    = status
+  stat  = status
+  ci    = commit
+  gdiff = difftool
+
+
+
+[color]
+  diff        = auto
+  status      = auto
+  branch      = auto
+  interactive = auto
+  ui          = true
+  pager       = true
+[color "branch"]
+  current = yellow reverse
+  local   = yellow
+  remote  = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old  = red bold
+  new  = green bold
+[color "status"]
+  added     = yellow
+  changed   = green
+  untracked = red
+
+
+[push]
+	default = simple
+
+[merge]
+  tool = p4merge
+	#tool =bc3
+[mergetool]
+  prompt          = false
+  keepTemporaries = false
+  keepBackup      = false
+
+[diff]
+  tool = p4merge
+	#tool=bc3
+[difftool]
+  prompt          = false
+  keepTemporaries = false
+  keepBackup      = false
+
+[mergetool "p4merge"]
+  cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  trustExitCode   = false
+
+[difftool "p4merge"]
+  cmd = p4merge "$LOCAL" "$REMOTE"
+  trustExitCode   = false

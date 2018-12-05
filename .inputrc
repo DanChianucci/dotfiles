@@ -1,0 +1,11 @@
+
+"\e[3~": delete-char            #DELETE
+"\e[1~": beginning-of-line      #HOME
+"\e[5~": end-of-line            #END
+
+"\e[A": history-search-backward #UP
+"\e[B": history-search-forward  #DOWN
+"\e[C": forward-char            #RIGHT
+"\e[D": backward-char           #LEFT
+
+"\C-r": reset

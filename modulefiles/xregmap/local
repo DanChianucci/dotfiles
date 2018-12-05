@@ -1,0 +1,28 @@
+#%Module
+proc ModulesHelp { } {
+    global ver
+
+    puts stderr "Xelic Register Map Builder"
+    puts stderr "\nVersion ${ver}\n"
+}
+
+# for Tcl script use only
+set     ver          "1.0"
+set     xregmap_root  "/home/chianucci/xregmap"
+set     xregmap_bin   "${xregmap_root}/xregmap"
+
+
+prepend-path PATH ${xregmap_bin}
+if { ! [is-loaded python] } {
+  module load python
+}
+prereq python
+
+
+setenv TEXINPUTS .:${xregmap_bin}/texmf//:
+
+module-whatis   "XREGMAP ${ver}"
+conflict xregmap
+
+setenv XREGMAP_ROOT ${xregmap_root}
+setenv XREGMAP_BIN ${xregmap_bin}

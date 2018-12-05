@@ -1,0 +1,112 @@
+#
+# Powerline Red Block - Tmux Theme
+# Created by Jim Myhrberg <contact@jimeh.me>.
+#
+# Inspired by vim-powerline: https://github.com/Lokaltog/powerline
+#
+# Requires terminal to be using a powerline compatible font, find one here:
+# https://github.com/Lokaltog/powerline-fonts
+#
+
+# Status update interval
+set -g status-interval 1
+
+
+bar_color=black
+active_bg_color=default
+inactive_bg_color=default
+
+hd1_color=blue
+hd2_color=cyan
+hd3_color=white
+
+txt_color=black
+
+theme_color=blue
+
+
+# Basic status bar colors
+set -g status-justify centre
+set -g status-fg $theme_color
+set -g status-bg $bar_color
+
+
+# Window status
+set -g window-status-format " #I:#W#F "
+set -g window-status-current-format " #I:#W#F "
+set -g window-status-separator ""
+
+# Current window status
+set -g window-status-current-bg $theme_color
+set -g window-status-current-fg $bar_color
+
+# Window with activity status
+set -g window-status-activity-bg $theme_color
+set -g window-status-activity-fg $bar_color
+
+
+
+
+
+
+
+# Left side of status bar
+
+set -g status-left-fg $txt_color
+set -g status-left-bg $bar_color
+set -g status-left-length 40
+set -g status-left \
+"#[fg=$txt_color ,bg=$hd1_color] #S "\
+"#[fg=$hd1_color ,bg=$hd2_color]"\
+"#[fg=$txt_color ,bg=$hd2_color] #(whoami) "\
+"#[fg=$hd2_color ,bg=$hd3_color]"\
+"#[fg=$txt_color ,bg=$hd3_color] #I:#P "\
+"#[fg=$hd3_color ,bg=$bar_color]"
+
+# Right side of status bar
+set -g status-right-fg $txt_color
+set -g status-right-bg $bar_color
+set -g status-right-length 150
+set -g status-right \
+"#[fg=$hd3_color ,bg=$bar_color]"\
+"#[fg=$txt_color ,bg=$hd3_color] %-I:%M:%S "\
+"#[fg=$hd2_color ,bg=$hd3_color]"\
+"#[fg=$txt_color ,bg=$hd2_color] %d-%b-%y "\
+"#[fg=$hd1_color ,bg=$hd2_color]"\
+"#[fg=$txt_color ,bg=$hd1_color] #h "
+
+
+#Window Styles
+# set -g window-style        "fg=default, bg=$inactive_bg_color"
+# set -g window-active-style "fg=default, bg=$active_bg_color"
+
+# Pane border
+set -g pane-border-fg $theme_color
+set -g pane-border-bg $active_bg_color
+
+# Active pane border
+set -g pane-active-border-fg $theme_color
+set -g pane-active-border-bg $active_bg_color
+
+# Pane number indicator
+set -g display-panes-colour white
+set -g display-panes-active-colour $theme_color
+
+# Clock mode
+set -g clock-mode-colour $theme_color
+
+
+# Message
+set -g message-fg $txt_color
+set -g message-bg $theme_color
+
+# Command message
+set -g message-command-fg $txt_color
+set -g message-command-bg $theme_color
+
+# Mode
+set -g mode-fg $txt_color
+set -g mode-bg $theme_color
+
+
+setw -g set-titles-string "#{pane_current_path}"

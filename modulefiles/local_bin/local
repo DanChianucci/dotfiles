@@ -1,0 +1,15 @@
+#%Module
+proc ModulesHelp { } {
+    global ver
+
+    puts stderr "local_bin"
+    puts stderr "\nVersion ${ver}\n"
+}
+
+# for Tcl script use only
+set     ver          "local"
+set     basepath     "/home/chianucci/local/bin"
+
+
+module-whatis   "XCov ${ver}"
+prepend-path PATH ${basepath}

@@ -18,7 +18,6 @@ export HISTCONTROL='ignoreboth'
 export PYTHONSTARTUP=$HOME/.pythonstartup
 
 source ${HOME}/.config/bashrc.d/git_prompt.bash
-
 set_prompt () {
     local last_command=$?
     PS1=''
@@ -38,10 +37,14 @@ set_prompt () {
         PS1+='($?)\n'
         PS1+=$color_off
     fi
-
-    PS1+=$color_blue
+    if [ -z "$PROMPT_COLOR" ]; then
+      PS1+=$color_blue
+    else
+      PS1+=$PROMPT_COLOR
+    fi;
     PS1+="\u@\h"       #<username>@<hostname>[jobs]: <directory>$
     PS1+=$color_off
+
 
     num_jobs=$(count_jobs)
     if [[ $num_jobs = "?" || $num_jobs -gt 0 ]]; then
@@ -76,5 +79,7 @@ set_prompt () {
 
 }
 PROMPT_COMMAND='set_prompt'
+
+
 
 bind -f ~/.inputrc

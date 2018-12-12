@@ -1,0 +1,20 @@
+#%Module
+proc ModulesHelp { } {
+    global ver
+
+    puts stderr "Xelic Tools"
+    puts stderr "\nVersion ${ver}\n"
+}
+
+module load python
+
+# for Tcl script use only
+set     ver          "local"
+set     basepath     "/home/chianucci/xtools/xtools"
+
+
+setenv XTOOLS_ROOT ${basepath}
+setenv XTOOLS_BIN_DIR ${basepath}/bin
+
+module-whatis   "XTOOLS ${ver}"
+prepend-path PATH ${basepath}/bin

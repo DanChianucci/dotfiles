@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+for filename in {..?,.[!.],}*; do
+  if [ "$filename" = "install" ] ||  [ "$filename" = "uninstall" ] ||[ "$filename" = ".git" ]; then
+    continue
+
+  elif [ -f  ~/${filename} ]; then
+    echo "Removing ${filename} to ~/${filename}";
+    rm ~/$filename;
+
+  elif [ -d  ~/config/${filename} ]; then
+    echo "Removing ${filename}/ to ~/config/${filename}";
+    rm ~/.config/$filename;
+  fi;
+done

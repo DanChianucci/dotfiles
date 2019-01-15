@@ -139,35 +139,22 @@ STICKY 04;37;44
 #+ Extension Pattern +
 #+-------------------+
 
-
-#+--- Documents ---+
-#Italic Red
-.doc  03;31
-.docx 03;31
-.dot  03;31
-.pdf  03;31
-.ppt  03;31
-.pptx 03;31
-.xls  03;31
-.xlsx 03;31
-
-
 #+--- Other ---+
-#Light Grey (Notrmal)
-.xml  37
-.json 37
-.txt  37
+#Light Grey (Normal)
+.xml  00;37
+.json 00;37
+.txt  00;37
 
 #+---- Logs ----+
 #Cyan
-.log  35
-.out  35
+.log  00;35
+.out  00;35
 
 # #+--- Executables ---+
 #Green
-.do     32
-.sh     32
-.tcl    32
+.do     00;32
+.sh     00;32
+.tcl    00;32
 
 
 #+--- Ignores ---+
@@ -184,6 +171,16 @@ STICKY 04;37;44
 
 
 
+#+--- Documents ---+
+#Italic Red
+.doc  01;31
+.docx 01;31
+.dot  01;31
+.pdf  01;31
+.ppt  01;31
+.pptx 01;31
+.xls  01;31
+.xlsx 01;31
 
 #+--- Archives ---+
 #Bold Red

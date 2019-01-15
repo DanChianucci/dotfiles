@@ -1,10 +1,10 @@
 [core]
-  autocrlf = true
-	editor   = vim +star 
+  autocrlf = false
+  editor   = vim +star
 
 [user]
-	name  = chianucci
-	email = chianucci@xelic.com
+  name  = chianucci
+  email = chianucci@xelic.com
 
 [alias]
   co    = checkout
@@ -22,6 +22,7 @@
   interactive = auto
   ui          = true
   pager       = true
+
 [color "branch"]
   current = yellow reverse
   local   = yellow
@@ -38,28 +39,31 @@
 
 
 [push]
-	default = simple
+  default = simple
 
-[merge]
+[diff]
   tool = p4merge
-	#tool =bc3
-[mergetool]
+  #tool=bc3
+
+[difftool]
   prompt          = false
   keepTemporaries = false
   keepBackup      = false
 
-[diff]
+[difftool "p4merge"]
+  cmd = p4merge "$LOCAL" "$REMOTE"
+  trustExitCode   = false
+
+
+[merge]
   tool = p4merge
-	#tool=bc3
-[difftool]
+  #tool =bc3
+
+[mergetool]
   prompt          = false
   keepTemporaries = false
   keepBackup      = false
 
 [mergetool "p4merge"]
   cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-  trustExitCode   = false
-
-[difftool "p4merge"]
-  cmd = p4merge "$LOCAL" "$REMOTE"
   trustExitCode   = false

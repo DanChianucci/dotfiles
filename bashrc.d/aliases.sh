@@ -66,5 +66,4 @@ alias center="screensize center"
 alias right="screensize right"
 
 alias createvnc="vncserver -geometry 2560x1440 -geometry 1920x1200 -geometry 1920x1080"
-alias iplint="xmllint --noout --schema http://www.accellera.org/images/XMLSchema/IPXACT/1685-2014/index.xsd"
 alias weather="curl wttr.in"

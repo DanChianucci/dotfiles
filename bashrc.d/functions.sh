@@ -65,10 +65,6 @@ function resubmit {
   done
 }
 
-function sload {
-  module unload riviera modeltech vcs-mx
-  module load  $1
-}
 
 function xgo {
   core_dir=$(xfind "$@")

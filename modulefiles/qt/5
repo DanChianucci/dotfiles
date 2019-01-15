@@ -1,0 +1,5 @@
+#%Module
+
+# for Tcl script use only
+set     basepath     "/usr/lib64/qt5"
+prepend-path PATH ${basepath}/bin

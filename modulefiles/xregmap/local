@@ -1,28 +1,28 @@
 #%Module
-proc ModulesHelp { } {
-    global ver
+conflict xregmap
 
-    puts stderr "Xelic Register Map Builder"
-    puts stderr "\nVersion ${ver}\n"
-}
-
-# for Tcl script use only
-set     ver          "1.0"
-set     xregmap_root  "/home/chianucci/xregmap"
-set     xregmap_bin   "${xregmap_root}/xregmap"
-
-
-prepend-path PATH ${xregmap_bin}
 if { ! [is-loaded python] } {
   module load python
 }
+
+if { ! [is-loaded texlive] } {
+  module load texlive
+}
+
 prereq python
+prereq texlive
 
-
-setenv TEXINPUTS .:${xregmap_bin}/texmf//:
+#Tcl script use only
+set ver          "local"
+set xregmap_root  "/home/chianucci/Workareas/tools/xregmap"
+set xregmap_bin   "${xregmap_root}/xregmap"
 
 module-whatis   "XREGMAP ${ver}"
-conflict xregmap
 
+
+prepend-path PATH ${xregmap_bin}
 setenv XREGMAP_ROOT ${xregmap_root}
 setenv XREGMAP_BIN ${xregmap_bin}
+setenv TEXINPUTS .:${xregmap_bin}/texmf//:
+
+set-alias iplint "xmllint --noout --schema /home/projects/xelic/tools/xregmap/snapshots/ieee-1685-2014/index.xsd"

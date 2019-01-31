@@ -14,6 +14,8 @@ export HISTTIMEFORMAT='%T     '
 export HISTIGNORE='ls:pwd:cls:clear:clc:history:ll:histg:cd'
 export HISTCONTROL='ignoreboth'
 
+export GMERGE_TOOL="bcompare:p4merge:meld"
+export GDIFF_TOOL="bcompare:p4merge:meld:emacs:gvim"
 
 export PYTHONSTARTUP=$HOME/.pythonstartup
 

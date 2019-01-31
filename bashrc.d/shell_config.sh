@@ -9,7 +9,7 @@ shopt -s histappend
 
 { test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"; } &>/dev/null
 
-export CDPATH=".:~:~/Workareas:~/Workareas/tools:~/Workareas/cores:~/Workareas/subsystems"
+export CDPATH=".:~:~/tools:~/cores:~/subsystems"
 export HISTTIMEFORMAT='%T     '
 export HISTIGNORE='ls:pwd:cls:clear:clc:history:ll:histg:cd'
 export HISTCONTROL='ignoreboth'

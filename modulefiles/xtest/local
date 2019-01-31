@@ -10,7 +10,7 @@ prereq python
 
 # for Tcl script use only
 set     ver          "local"
-set     basepath     "/home/chianucci/Workareas/tools/xtest2"
+set     basepath     "/home/chianucci/tools/xtest2"
 
 module-whatis   "XTEST ${ver}"
 prepend-path PATH ${basepath}

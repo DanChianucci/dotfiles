@@ -14,7 +14,7 @@ prereq texlive
 
 #Tcl script use only
 set ver          "local"
-set xregmap_root  "/home/chianucci/Workareas/tools/xregmap"
+set xregmap_root  "/home/chianucci/tools/xregmap"
 set xregmap_bin   "${xregmap_root}/xregmap"
 
 module-whatis   "XREGMAP ${ver}"

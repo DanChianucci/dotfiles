@@ -10,7 +10,7 @@ module load python
 
 # for Tcl script use only
 set     ver          "local"
-set     basepath     "/home/chianucci/Workareas/tools/xtools/xtools"
+set     basepath     "/home/chianucci/tools/xtools/xtools"
 
 
 setenv XTOOLS_ROOT ${basepath}

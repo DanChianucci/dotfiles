@@ -18,7 +18,7 @@ function run_with_timeout () {
 
 function count_jobs(){
   if squeue -V >/dev/null 2>&1 ; then
-     run_with_timeout 0.2 squeue -u chianucci | echo "`wc -l` - 1" | bc  || echo '?'
+     run_with_timeout 0.2 squeue -u $USER | echo "`wc -l` - 1" | bc  || echo '?'
   else
     echo "?"
   fi
@@ -108,7 +108,7 @@ function sq(){
 }
 
 function dq(){
-  sq -u chianucci
+  sq -u $USER
 }
 export -f sq dq
 

@@ -59,9 +59,7 @@ function calc {
 function resubmit {
   for var in "$@"
   do
-    (hhand
-      { cd $var && ./resubmit.sh; } || echo "Could Not resubmit $var"
-    )
+    { cd $var && ./resubmit.sh; } || echo "Could Not resubmit $var"
   done
 }
 
@@ -110,7 +108,7 @@ function sq(){
 function dq(){
   sq -u $USER
 }
-export -f sq dq
+export -f sq dq resubmit
 
 
 function tmux() {

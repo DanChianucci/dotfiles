@@ -65,5 +65,5 @@ alias left="screensize left"
 alias center="screensize center"
 alias right="screensize right"
 
-alias createvnc="vncserver -geometry 2560x1440 -geometry 1920x1200 -geometry 1920x1080"
+alias createvnc="vncserver -geometry 2560x1440"
 alias weather="curl wttr.in"

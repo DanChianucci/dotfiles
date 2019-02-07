@@ -59,7 +59,9 @@ function calc {
 function resubmit {
   for var in "$@"
   do
-    { cd $var && ./resubmit.sh; } || echo "Could Not resubmit $var"
+    (  #Run in a subshell so the cd doesn't mess up parent
+      { cd $var && ./resubmit.sh; } || echo "Could Not resubmit $var"
+    )
   done
 }
 

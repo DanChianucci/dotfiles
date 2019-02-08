@@ -4,15 +4,16 @@ shopt -s extglob
 shopt -s histappend    #append don't overwrite historyfile
 shopt -s checkwinsize  #Check Win size after each command
 shopt -s histappend
+shopt -s cmdhist
 
-
+#PROMPT_DIRTRIM=3
 
 { test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"; } &>/dev/null
 
 export CDPATH=".:~:~/tools:~/cores:~/subsystems"
 export HISTTIMEFORMAT='%T     '
-export HISTIGNORE='ls:pwd:cls:clear:clc:history:ll:histg:cd'
-export HISTCONTROL='ignoreboth'
+export HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
+export HISTCONTROL='erasedups:ignoreboth'
 
 export GMERGE_TOOL="bcompare:p4merge:meld"
 export GDIFF_TOOL="bcompare:p4merge:meld:emacs:gvim"
@@ -31,7 +32,7 @@ set_prompt () {
     local color_yellow='\[\e[0;33m\]'
     local color_blue='\[\e[0;34m\]'
     local color_purple='\[\e[0;35m\]'
-    local color_cyan='\[\e[0;36m\]'
+    # local color_cyan='\[\e[0;36m\]'
     local num_jobs
 
     if [[ $last_command != 0 ]]; then

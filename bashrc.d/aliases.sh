@@ -1,20 +1,22 @@
 #! /usr/bin/env bash
 
-
+LS_COMMON="--color=auto -I NTUSER.DAT\* -I ntuser.\*"
 if ls --group-directories-first > /dev/null 2>&1; then
-  alias ls='ls --color="auto" --group-directories-first'
+  alias ls="ls $LS_COMMON --group-directories-first"
 else
-  alias ls='ls --color="auto"'
+  alias ls="ls $LS_COMMON"
 fi;
+alias ll="ls -lh"
+alias ll.="ls -lAh"
+alias l="ls"
+alias l.="ls -d .*"
+
+
 
 if rm -I --version > /dev/null 2>&1; then
   alias rm="rm -I"
 fi
 
-alias ll="ls -lh"
-alias ll.="ls -lAh"
-alias l="ls"
-alias l.="ls -d .*"
 
 alias tree="tree -Csuh"
 

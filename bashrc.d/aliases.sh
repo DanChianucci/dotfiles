@@ -2,20 +2,20 @@
 
 
 if ls --group-directories-first > /dev/null 2>&1; then
-  alias ls='ls -X --color="auto" --group-directories-first'
+  alias ls='ls --color="auto" --group-directories-first'
 else
-  alias ls='ls -X --color="auto"'
+  alias ls='ls --color="auto"'
 fi;
 
 if rm -I --version > /dev/null 2>&1; then
   alias rm="rm -I"
 fi
 
-
 alias ll="ls -lh"
-alias la="ls -A"
-alias l="ls -CF"
+alias ll.="ls -lAh"
+alias l="ls"
 alias l.="ls -d .*"
+
 alias tree="tree -Csuh"
 
 alias reload="reset && source ~/.bashrc"

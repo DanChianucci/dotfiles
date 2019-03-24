@@ -5,8 +5,8 @@
   editor   = vim +star
 
 [user]
-  name  = chianucci
-  email = chianucci@xelic.com
+  name  = Dan Chianucci
+  email = dan.chianucci@gmail.com
 
 [alias]
   co    = checkout
@@ -69,3 +69,6 @@
 [mergetool "p4merge"]
   cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
   trustExitCode   = false
+
+[include]
+  path = ~/.gitconfig.local

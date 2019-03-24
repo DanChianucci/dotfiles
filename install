@@ -3,7 +3,7 @@
 import os,sys
 
 def get_install_map():
-  ignored_files = ("install","uninstall",".git")
+  ignored_files = ("install","uninstall",".git",".gitattributes")
   install_map =  { }
 
   standard_files = (file for file in os.listdir(".") if file not in ignored_files and file not in install_map)

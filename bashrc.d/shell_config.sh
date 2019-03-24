@@ -19,9 +19,9 @@ export GMERGE_TOOL="bcompare:p4merge:meld"
 export GDIFF_TOOL="bcompare:p4merge:meld:emacs:gvim"
 export XSTAT_MODE="MULTIPROCESSING"
 
-export PYTHONSTARTUP=$HOME/.pythonstartup
+export PYTHONSTARTUP="$HOME/.pythonstartup"
 
-source ${HOME}/.config/bashrc.d/git_prompt.bash
+source "$HOME/.config/bashrc.d/git_prompt.bash"
 set_prompt () {
     local last_command=$?
     PS1=''

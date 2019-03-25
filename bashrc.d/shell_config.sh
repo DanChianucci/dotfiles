@@ -21,7 +21,7 @@ export XSTAT_MODE="MULTIPROCESSING"
 
 export PYTHONSTARTUP="$HOME/.pythonstartup"
 
-source "$HOME/.config/bashrc.d/git_prompt.bash"
+# source "$HOME/.config/bashrc.d/git_prompt.bash"
 set_prompt () {
     local last_command=$?
     PS1=''
@@ -51,7 +51,7 @@ set_prompt () {
 
 
     num_jobs=$(count_jobs)
-    if [[ $num_jobs = "?" || $num_jobs -gt 0 ]]; then
+    if [[ "$num_jobs" = "?" || $num_jobs -gt 0 ]]; then
         PS1+=$color_purple
         PS1+="[$num_jobs]"
         PS1+=$color_off
@@ -66,7 +66,8 @@ set_prompt () {
 
     # Add git information
     local git_br
-    git_br=$(__git_ps1 '%s')
+    # git_br=$(__git_ps1 '%s')
+    git_br=$(git branch --color=never 2> /dev/null | sed -e 's/^\*\s*//')
     if [ ! -z $git_br ]; then
         PS1+=$color_yellow
         PS1+=" ("

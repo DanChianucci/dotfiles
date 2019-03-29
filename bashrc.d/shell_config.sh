@@ -46,7 +46,7 @@ set_prompt () {
     else
       PS1+=$PROMPT_COLOR
     fi;
-    PS1+="\u@\h"       #<username>@<hostname>[jobs]: <directory>$
+    PS1+="$(whoami)@\h"       #<username>@<hostname>[jobs]: <directory>$
     PS1+=$color_off
 
 
@@ -67,8 +67,8 @@ set_prompt () {
     # Add git information
     local git_br
     # git_br=$(__git_ps1 '%s')
-    git_br=$(git branch --color=never 2> /dev/null | sed -e 's/^\*\s*//')
-    if [ ! -z $git_br ]; then
+    git_br=$(git branch --color=never 2> /dev/null | sed -e '/^[^*]/d' -e 's/^\*\s*//')
+    if [ ! -z "$git_br" ]; then
         PS1+=$color_yellow
         PS1+=" ("
         PS1+=$git_br

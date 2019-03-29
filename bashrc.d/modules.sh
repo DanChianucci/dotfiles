@@ -11,7 +11,7 @@ if command -v module > /dev/null; then
                 slurm              \
                 xcm                \
                 xregress           \
-                riviera/2017.02.99  &> /dev/null
+                riviera/2017.10  &> /dev/null
     module list
   fi
 fi

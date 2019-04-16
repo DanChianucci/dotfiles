@@ -17,7 +17,10 @@ export HISTCONTROL='erasedups:ignoreboth'
 
 export GMERGE_TOOL="bcompare:p4merge:meld"
 export GDIFF_TOOL="bcompare:p4merge:meld:emacs:gvim"
-export XSTAT_MODE="MULTIPROCESSING"
+
+export XSTAT_PROCESS_MODE="MULTIPROCESSING"
+export XSTAT_DEF_FILTERS="abCmRUiWLE;abCMruiwLE;abCMruiwlE"
+
 
 export PYTHONSTARTUP="$HOME/.pythonstartup"
 

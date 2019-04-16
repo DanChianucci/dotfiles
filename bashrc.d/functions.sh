@@ -39,10 +39,6 @@ function man() {
         man "$@"
 }
 
-function hhand() {
-  ( cd ~/$1/src && Wa_Handle )
-}
-
 function domain(){
   echo "User:   " "$(whoami)"
   echo "Host:   " "$(hostname)"

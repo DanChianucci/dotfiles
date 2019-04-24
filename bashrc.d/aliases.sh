@@ -32,8 +32,6 @@ alias histg="history | grep"
 alias sview="sview &"
 
 
-alias ccat='egrep --color "\b(FAIL|FAILURE|ERROR|WARNING)\b|$"'
-alias catlog='egrep --color "\b(FAIL|FAILURE|ERROR|WARNING)\b|$" *.log'
 alias watch="watch "
 
 

@@ -107,6 +107,34 @@ function dq(){
 export -f sq dq resubmit
 
 
+
+
+
+function highlight() {
+  declare -A fg_color_map
+  fg_color_map[black]=30
+  fg_color_map[red]=31
+  fg_color_map[green]=32
+  fg_color_map[yellow]=33
+  fg_color_map[blue]=34
+  fg_color_map[magenta]=35
+  fg_color_map[cyan]=36
+
+  fg_c=$(echo -e "\e[1;${fg_color_map[$1]}m")
+  c_rs=$'\e[0m'
+  sed -u s"/\b$2\b/$fg_c\0$c_rs/gI"
+}
+
+function ccat(){
+  cat $1 | highlight green "\(SUCCESS\|PASS\)" |highlight red "\(FAILURE\|FAIL\|ERROR\|ERR\)"| highlight yellow "\(WARNING\|WARN\)" | highlight blue "\(INFO\|DEBUG\)"
+}
+
+
+function catlog(){
+  ccat *.log
+}
+
+
 function tmux() {
   local tmux
   tmux=$(type -fp tmux)

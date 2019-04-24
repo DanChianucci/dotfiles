@@ -10,8 +10,7 @@ if command -v module > /dev/null; then
                 local_bin/local    \
                 slurm              \
                 xcm                \
-                xregress           \
-                riviera/2017.10  &> /dev/null
+                xregress/beta      \
     module list
   fi
 fi

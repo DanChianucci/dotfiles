@@ -10,7 +10,7 @@ if command -v module > /dev/null; then
                 local_bin/local    \
                 slurm              \
                 xcm                \
-                xregress/beta      \
+                xregress/beta
     module list
   fi
 fi

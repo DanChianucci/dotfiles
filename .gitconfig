@@ -1,5 +1,5 @@
 [core]
-  autocrlf = true
+  autocrlf = false
   safecrlf = warn
   eol      = native
   editor   = vim +star

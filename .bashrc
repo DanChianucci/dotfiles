@@ -7,6 +7,12 @@ fi
 # exit if not interactive
 [[ $- != *i* ]] && return
 
+
+if [ -f ~/.bashrc.local ]; then
+  source ~/.bashrc.local
+fi
+
+
 # Source local Configs
 if [[ -d ~/.config/bashrc.d && -r ~/.config/bashrc.d && -x ~/.config/bashrc.d ]]; then
   for file in ~/.config/bashrc.d/*.sh; do

@@ -29,41 +29,15 @@ alias clc="clear"
 alias top=htop
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias histg="history | grep"
-alias sview="sview &"
+
 
 
 alias watch="watch "
 
-
-
-
-alias wsq="watch sq"
-alias wdq="watch dq"
-
-
-
 alias xww="find . -type f -perm /200"
-alias dwo="xwo -u chianucci"
+
 
 alias fbacks='find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc" -type f'
 alias rmb='rm `fbacks`'
 
-
-function screensize(){
-  if   [ $1 = "left" ]; then
-    xrandr -s 1920x1200
-  elif [ $1 = "center" ]; then
-    xrandr -s 2560x1440
-  elif [ $1 = "right" ]; then
-    xrandr -s 1920x1080
-  else
-    echo "screensize argument must be one of left, center, right"
-    return 1
-  fi
-}
-alias left="screensize left"
-alias center="screensize center"
-alias right="screensize right"
-
-alias createvnc="vncserver -geometry 2560x1440"
 alias weather="curl wttr.in"

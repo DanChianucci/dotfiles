@@ -15,15 +15,11 @@ export HISTTIMEFORMAT='%T     '
 export HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
 export HISTCONTROL='erasedups:ignoreboth'
 
-export GMERGE_TOOL="bcompare:p4merge:meld"
-export GDIFF_TOOL="bcompare:p4merge:meld:emacs:gvim"
-
-export XSTAT_PROCESS_MODE="MULTIPROCESSING"
-export XSTAT_DEF_FILTERS="abCmRUiWLE:abCMRuiwLE:abCmruiwLE"
-
 export PYTHONSTARTUP="$HOME/.pythonstartup"
 
-# source "$HOME/.config/bashrc.d/git_prompt.bash"
+bind -f ~/.inputrc
+
+
 set_prompt () {
     local last_command=$?
     PS1=''
@@ -51,12 +47,13 @@ set_prompt () {
     PS1+="$(whoami)@\h"       #<username>@<hostname>[jobs]: <directory>$
     PS1+=$color_off
 
-
-    num_jobs=$(count_jobs)
-    if [[ "$num_jobs" = "?" || $num_jobs -gt 0 ]]; then
-        PS1+=$color_purple
-        PS1+="[$num_jobs]"
-        PS1+=$color_off
+    if [ ! -z "$CUSTOM_PS1_CMD" ]; then
+      custom_val=$($CUSTOM_PS1_CMD)
+      if [[ "$custom_val" = "?" || $custom_val -gt 0 ]]; then
+          PS1+=$color_purple
+          PS1+="[$custom_val]"
+          PS1+=$color_off
+      fi
     fi
 
     PS1+=$color_off
@@ -86,7 +83,3 @@ set_prompt () {
 
 }
 PROMPT_COMMAND='set_prompt'
-
-
-
-bind -f ~/.inputrc

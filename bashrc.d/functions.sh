@@ -16,12 +16,6 @@ function run_with_timeout () {
     )
 }
 
-function count_jobs(){
-  if squeue -V >/dev/null 2>&1 ; then
-     run_with_timeout 0.2 squeue -u $USER | echo "`wc -l` - 1" | bc  || echo '?'
-  fi
-}
-
 function man() {
 
   #mb BLINK     START
@@ -50,26 +44,6 @@ function calc {
   echo "scale=4; $1" | bc
 }
 
-function resubmit {
-  for var in "$@"
-  do
-    (  #Run in a subshell so the cd doesn't mess up parent
-      { cd $var && ./resubmit.sh; } || echo "Could Not resubmit $var"
-    )
-  done
-}
-
-
-function xgo {
-  core_dir=$(xfind "$@")
-  if [ -z $core_dir ]; then
-    echo "Couldn't Find Project For $*"
-  else
-    cd $core_dir || return
-  fi
-}
-
-
 function pathmunge () {
   if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
     if [ "$2" = "after" ] ; then
@@ -84,9 +58,6 @@ function ppath {
   tr ':' '\n' <<< $PATH
 }
 
-
-
-
 #Interprets the first argument as a command name and calls the command for each subsequent arguemnt
 function multi {
   cmd="${1}"
@@ -94,21 +65,6 @@ function multi {
     eval $cmd "$i"
   done
 }
-
-function sq(){
-  cols=$(expr $COLUMNS - 85)
-  SQ_FORMAT="%10i %15u %10P   %${cols}j %10T %10M %20R"
-  squeue -o "$SQ_FORMAT" "$@"
-}
-
-function dq(){
-  sq -u $USER
-}
-export -f sq dq resubmit
-
-
-
-
 
 function highlight() {
   declare -A fg_color_map
@@ -132,28 +88,4 @@ function ccat(){
 
 function catlog(){
   ccat *.log
-}
-
-
-function tmux() {
-  local tmux
-  tmux=$(type -fp tmux)
-  case "$1" in
-      update-environment|update-env|env-update)
-          local v
-          while read v; do
-              if [[ $v == -* ]]; then
-                  unset ${v/#-/}
-              else
-                  # Add quotes around the argument
-                  v=${v/=/=\"}
-                  v=${v/%/\"}
-                  eval export $v
-              fi
-          done < <(tmux show-environment)
-          ;;
-      *)
-          $tmux "$@"
-          ;;
-  esac
 }

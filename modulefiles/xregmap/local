@@ -13,16 +13,19 @@ prereq python
 prereq texlive
 
 #Tcl script use only
-set ver          "local"
-set xregmap_root  "/home/chianucci/tools/xregmap"
-set xregmap_bin   "${xregmap_root}/xregmap"
+set ver                "local"
+set xregmap_proj       "/home/chianucci/tools/xregmap"
+set xregmap_root       "${xregmap_proj}/xregmap"
+set xregmap_bin        "${xregmap_root}/bin"
 
 module-whatis   "XREGMAP ${ver}"
 
 
-prepend-path PATH ${xregmap_bin}
+setenv XREGMAP_PROJ ${xregmap_proj}
 setenv XREGMAP_ROOT ${xregmap_root}
-setenv XREGMAP_BIN ${xregmap_bin}
-setenv TEXINPUTS .:${xregmap_bin}/texmf//:
+setenv XREGMAP_BIN  ${xregmap_bin}
+setenv TEXINPUTS    .:${xregmap_root}/texmf//:
 
-set-alias iplint "xmllint --noout --schema /home/projects/xelic/tools/xregmap/snapshots/ieee-1685-2014/index.xsd"
+
+prepend-path PATH   ${xregmap_bin}
+set-alias iplint "xmllint --noout --schema ${xregmap_proj}/snapshots/ieee-1685-2014/index.xsd"

@@ -2,8 +2,7 @@
 
 from __future__ import print_function
 
-import os, sys, readline
-import math as m
+import os, sys, readline, math
 from pprint import pprint
 
 sys.path.append(os.getenv("PWD"))
@@ -96,31 +95,34 @@ def setup_readline():
 
 
 
+################################################################################
+# Custom No Argument Commends
+################################################################################
+def clearscreen():
+  try:
+    return '\r'
+  finally:
+    os.system('clear')
 
-class Clear():
+
+class FuncCaller:
+  def __init__(self, func, *args, **kwargs):
+    from functools import partial
+    self.func = partial(func,*args,**kwargs)
+
   def __call__(self):
-    os.system('clear')
+    return self.func()
 
-  def __str__(self):
-    os.system('clear')
-    return ""
+  __repr__=__call__
 
-  def __repr__(self):
-    os.system('clear')
-    return ""
+  __str__ =__call__
 
-class Exit():
-  def __call__(self):
-    sys.exit()
 
-  def __str__(self):
-    sys.exit()
 
-  def __repr__(self):
-    sys.exit()
+
 
 if __name__ == "__main__":
-  __builtins__.clear = Clear()
-  __builtins__.exit = Exit()
+  __builtins__.clear = FuncCaller(clearscreen)
+  __builtins__.exit  = FuncCaller(sys.exit)
   setup_readline()
   setup_prompt()

@@ -89,3 +89,7 @@ function ccat(){
 function catlog(){
   ccat *.log
 }
+
+function bigfiles(){
+  find $1 -type f -exec du -a {} + | sort -rn |  head
+}

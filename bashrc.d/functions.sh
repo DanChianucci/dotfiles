@@ -5,14 +5,15 @@
 function run_with_timeout () {
     local time=10
     if [[ $1 =~ ^[0-9]+(.[0-9]+)?$ ]]; then time=$1; shift; fi
+
     # Run in a subshell to avoid job control messages
-    ( "$@" &
-      child=$!
-      # Avoid default notification in non-interactive shell for SIGTERM
-      trap -- "" SIGTERM
-      ( sleep $time
-        kill $child 2> /dev/null ) &
-      wait $child
+    (
+      "$@" &                                     #Run the command in bg
+      child=$!                                   #hold onto the childs PID
+      trap -- "" SIGTERM                         #Avoid default notification in non-interactive shell for SIGTERM
+
+      ( sleep $time;  kill $child 2>/dev/null) & #Wait for time, and then kill child
+      wait $child                                #Wait until child finishes or it is killed
     )
 }
 
@@ -92,4 +93,17 @@ function catlog(){
 
 function bigfiles(){
   find $1 -type f -exec du -a {} + | sort -rn |  head
+}
+
+
+#https://superuser.com/questions/878640/unix-script-wait-until-a-file-exists
+wait_file() {
+  local file="'$1'"; shift
+  local wait_seconds="${1:-10}"; shift # 10 seconds as default timeout
+
+  until test $((wait_seconds--)) -eq 0 -o -f "$(find . -name '$file' | head -1)" ; do
+    sleep 1;
+  done
+
+  ((++wait_seconds))
 }

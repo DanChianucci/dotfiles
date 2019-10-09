@@ -10,11 +10,18 @@
 
 [alias]
   co    = checkout
+  ci    = commit
+  br    = branch
   st    = status
   stat  = status
-  ci    = commit
+
+  unstage = reset HEAD --
+
   gdiff = difftool
 
+  last = log -1 HEAD
+  lol   = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola  = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
 
 [color]

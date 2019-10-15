@@ -17,68 +17,60 @@ export HISTCONTROL='erasedups:ignoreboth'
 
 export PYTHONSTARTUP="$HOME/.pythonstartup"
 
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 bind -f ~/.inputrc
 
 
+function colorize(){
+  declare -A color_map
+  color_map[white]="\e[0;0m"
+  color_map[black]="\e[0;30m"
+  color_map[red]="\e[0;31m"
+  color_map[green]="\e[0;32m"
+  color_map[yellow]="\e[0;33m"
+  color_map[blue]="\e[0;34m"
+  color_map[purple]="\e[0;35m"
+  color_map[magenta]="\e[0;35m"
+  color_map[cyan]="\e[0;36m"
+
+
+  fg_c=${color_map[$1]:-$1}
+  fg_rst="\e[0m"
+  echo -e $fg_c$2$fg_rst
+}
+
+
+#Customization
+# PROMPT_COLOR   - Color of the user@domain string (name or escape sequence)
+# CUSTOM_PS1_CMD - Custom Command to run places the output inside [] before the directory
 set_prompt () {
     local last_command=$?
     PS1=''
-
-    # color escape codes
-    local color_off='\[\e[0m\]'
-    local color_red='\[\e[0;31m\]'
-    local color_green='\[\e[0;32m\]'
-    local color_yellow='\[\e[0;33m\]'
-    local color_blue='\[\e[0;34m\]'
-    local color_purple='\[\e[0;35m\]'
-    # local color_cyan='\[\e[0;36m\]'
-    local num_jobs
-
     if [[ $last_command != 0 ]]; then
-        PS1+=$color_red
-        PS1+='($?)\n'
-        PS1+=$color_off
+        PS1+=$(colorize red '($?)\n')
     fi
-    if [ -z "$PROMPT_COLOR" ]; then
-      PS1+=$color_blue
-    else
-      PS1+=$PROMPT_COLOR
-    fi;
-    PS1+="$(whoami)@\h"       #<username>@<hostname>[jobs]: <directory>$
-    PS1+=$color_off
+
+    PS1+=$(colorize ${PROMPT_COLOR:-blue} "$(whoami)@\h")       #<username>@<hostname>[jobs]: <directory>$
 
     if [ ! -z "$CUSTOM_PS1_CMD" ]; then
       custom_val=$($CUSTOM_PS1_CMD)
       if [[ "$custom_val" = "?" || $custom_val -gt 0 ]]; then
-          PS1+=$color_purple
-          PS1+="[$custom_val]"
-          PS1+=$color_off
+          PS1+=$(colorize purple "[$custom_val]")
       fi
     fi
 
-    PS1+=$color_off
     PS1+=": "
-
-
-    PS1+=$color_green
-    PS1+='\w' # shortened working directory
+    PS1+=$(colorize green '\w') # shortened working directory
 
     # Add git information
     local git_br
-    # git_br=$(__git_ps1 '%s')
     git_br=$(git branch --color=never 2> /dev/null | sed -e '/^[^*]/d' -e 's/^\*\s*//')
     if [ ! -z "$git_br" ]; then
-        PS1+=$color_yellow
-        PS1+=" ("
-        PS1+=$git_br
-        PS1+=") "
+        PS1+=$(colorize yellow " ($git_br) ")
     fi
-
-
-
-    PS1+=$color_off
     PS1+="$ "
-
     history -a;
 
 }

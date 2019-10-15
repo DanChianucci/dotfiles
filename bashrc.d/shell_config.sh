@@ -25,19 +25,19 @@ bind -f ~/.inputrc
 
 function colorize(){
   declare -A color_map
-  color_map[white]="\e[0;0m"
-  color_map[black]="\e[0;30m"
-  color_map[red]="\e[0;31m"
-  color_map[green]="\e[0;32m"
-  color_map[yellow]="\e[0;33m"
-  color_map[blue]="\e[0;34m"
-  color_map[purple]="\e[0;35m"
-  color_map[magenta]="\e[0;35m"
-  color_map[cyan]="\e[0;36m"
+  color_map[white]="\[\e[0;0m\]"
+  color_map[black]="\[\e[0;30m\]"
+  color_map[red]="\[\e[0;31m\]"
+  color_map[green]="\[\e[0;32m\]"
+  color_map[yellow]="\[\e[0;33m\]"
+  color_map[blue]="\[\e[0;34m\]"
+  color_map[purple]="\[\e[0;35m\]"
+  color_map[magenta]="\[\e[0;35m\]"
+  color_map[cyan]="\[\e[0;36m\]"
 
 
   fg_c=${color_map[$1]:-$1}
-  fg_rst="\e[0m"
+  fg_rst="\[\e[0m\]"
   echo -e $fg_c$2$fg_rst
 }
 

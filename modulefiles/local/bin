@@ -12,11 +12,9 @@ set     basepath     "/home/chianucci/local"
 
 
 module-whatis   "XCov ${ver}"
-append-path PATH            "${basepath}/bin"
-append-path LD_LIBRARY_PATH "${basepath}/lib"
-append-path LIBRARY_PATH    "${basepath}/lib"
-append-path CPATH           "${basepath}/include"
-append-path MANPATH         "${basepath}/share/man"
-append-path INFOPATH        "${basepath}/share/info"
-
-append-path PATH           "/home/chianucci/scripts"
+prepend-path PATH            "${basepath}/bin"
+prepend-path LD_LIBRARY_PATH "${basepath}/lib"
+prepend-path LIBRARY_PATH    "${basepath}/lib"
+prepend-path CPATH           "${basepath}/include"
+prepend-path MANPATH         "${basepath}/share/man"
+prepend-path INFOPATH        "${basepath}/share/info"

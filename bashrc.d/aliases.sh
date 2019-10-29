@@ -22,7 +22,7 @@ alias tree="tree -Csuh"
 
 alias reload="reset && source ~/.bashrc"
 
-alias emacs="emacs -Q"
+
 alias cls="clear"
 alias clc="clear"
 

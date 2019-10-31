@@ -62,16 +62,17 @@ set_prompt () {
     fi
 
     PS1+=": "
-    PS1+=$(colorize green '\w') # shortened working directory
+    PS1+=$(colorize green '\w ') # shortened working directory
+
+    if [ ! -z "$CONDA_PROMPT_MODIFIER" ]; then
+        PS1+=$(colorize purple "$CONDA_PROMPT_MODIFIER")
+    fi
 
     # Add git information
     local git_br
     git_br=$(git branch --color=never 2> /dev/null | sed -e '/^[^*]/d' -e 's/^\*\s*//')
     if [ ! -z "$git_br" ]; then
-        PS1+=$(colorize yellow " ($git_br)")
-    fi
-    if [ ! -z "$CONDA_PROMPT_MODIFIER" ]; then
-        PS1+=$(colorize purple " $CONDA_PROMPT_MODIFIER")
+        PS1+=$(colorize yellow "($git_br)")
     fi
 
     PS1+=" $ "

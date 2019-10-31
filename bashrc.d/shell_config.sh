@@ -68,9 +68,13 @@ set_prompt () {
     local git_br
     git_br=$(git branch --color=never 2> /dev/null | sed -e '/^[^*]/d' -e 's/^\*\s*//')
     if [ ! -z "$git_br" ]; then
-        PS1+=$(colorize yellow " ($git_br) ")
+        PS1+=$(colorize yellow " ($git_br)")
     fi
-    PS1+="$ "
+    if [ ! -z "$CONDA_PROMPT_MODIFIER" ]; then
+        PS1+=$(colorize purple " $CONDA_PROMPT_MODIFIER")
+    fi
+
+    PS1+=" $ "
     history -a;
 
 }

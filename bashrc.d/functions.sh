@@ -97,7 +97,7 @@ function bigfiles(){
 
 
 #https://superuser.com/questions/878640/unix-script-wait-until-a-file-exists
-wait_file() {
+function wait_file() {
   local file="'$1'"; shift
   local wait_seconds="${1:-10}"; shift # 10 seconds as default timeout
 
@@ -123,4 +123,14 @@ function colors(){
     printf "\n"
   done
   printf "\n"
+}
+
+
+function attach()
+{
+  if [ $# -eq 0 ]; then
+    tmux attach >/dev/null 2>&1 || tmux new-session
+  else
+    tmux new-session -AP -F "Created New Session: #{session_name}" -s $1
+  fi
 }

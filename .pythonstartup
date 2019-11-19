@@ -2,48 +2,56 @@
 
 from __future__ import print_function
 
-import os, sys, readline, math
+import os
+import sys
+import math
 from pprint import pprint
 
 sys.path.append(os.getenv("PWD"))
 
 
+ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33,
+             "blue": 34, "purple": 35, "cyan": 36, "white": 37}
 
-ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33, "blue": 34, "purple": 35, "cyan": 36, "white": 37}
 
 def ansi_colorize(text, color, state, prompt=False):
-  mod = {"regular": "0;", "bold": "1;", "underline": "4;"}.get(state)
-  if mod is None:
-      mod = ""
-  col = ANSI_COLS.get(color)
-  if col is None:
-      col = 0
-      mod = ""
-  elif state == "bright":
-      col += 60
-      mod = "0;"
-  if prompt:
-      return "\001\033[{0}{1}m\002{2}\001\033[00m\002".format(mod, col, text)
-  return "\033[{0}{1}m{2}\033[00m".format(mod, col, text)
+    mod = {"regular": "0;", "bold": "1;", "underline": "4;"}.get(state)
+    if mod is None:
+        mod = ""
+    col = ANSI_COLS.get(color)
+    if col is None:
+        col = 0
+        mod = ""
+    elif state == "bright":
+        col += 60
+        mod = "0;"
+    if prompt:
+        return "\001\033[{0}{1}m\002{2}\001\033[00m\002".format(mod, col, text)
+    return "\033[{0}{1}m{2}\033[00m".format(mod, col, text)
 
 
 class CustomPS1:
-  def __str__(self, prompt=True):
-    return ansi_colorize(">>> ", "green", "bold", prompt=prompt)
-  def __len__(self):
-    return 4
+    def __str__(self, prompt=True):
+        return ansi_colorize(">>> ", "green", "bold", prompt=prompt)
+
+    def __len__(self):
+        return 4
 
 
 class CustomPS2:
-  def __str__(self, prompt=True):
-    return ansi_colorize("... ","yellow", "bold", prompt=prompt)
-  def __len__(self):
-    return 4
+    def __str__(self, prompt=True):
+        return ansi_colorize("... ", "yellow", "bold", prompt=prompt)
+
+    def __len__(self):
+        return 4
 
 
 def setup_prompt():
-  sys.ps1 = CustomPS1()
-  sys.ps2 = CustomPS2()
+    if os.name == 'nt':
+        pass
+    else:
+        sys.ps1 = CustomPS1()
+        sys.ps2 = CustomPS2()
 
 
 def rl_autoindent():
@@ -89,40 +97,39 @@ def rl_autoindent():
     readline.insert_text(indent)
 
 
-
 def setup_readline():
-    readline.set_pre_input_hook(rl_autoindent)
-
+    try:
+        import readline
+        readline.set_pre_input_hook(rl_autoindent)
+    except ImportError:
+        pass
 
 
 ################################################################################
 # Custom No Argument Commends
 ################################################################################
 def clearscreen():
-  try:
-    return '\r'
-  finally:
-    os.system('clear')
+    try:
+        return '\r'
+    finally:
+        os.system('clear')
 
 
 class FuncCaller:
-  def __init__(self, func, *args, **kwargs):
-    from functools import partial
-    self.func = partial(func,*args,**kwargs)
+    def __init__(self, func, *args, **kwargs):
+        from functools import partial
+        self.func = partial(func, *args, **kwargs)
 
-  def __call__(self):
-    return self.func()
+    def __call__(self):
+        return self.func()
 
-  __repr__=__call__
+    __repr__ = __call__
 
-  __str__ =__call__
-
-
-
+    __str__ = __call__
 
 
 if __name__ == "__main__":
-  __builtins__.clear = FuncCaller(clearscreen)
-  __builtins__.exit  = FuncCaller(sys.exit)
-  setup_readline()
-  setup_prompt()
+    __builtins__.clear = FuncCaller(clearscreen)
+    __builtins__.exit = FuncCaller(sys.exit)
+    setup_readline()
+    setup_prompt()

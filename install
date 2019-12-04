@@ -1,47 +1,53 @@
 #!/usr/bin/env python
 
-import os,sys
+import os
+import sys
+
 
 def get_install_map():
-  ignored_files = ("install","uninstall",".git",".gitattributes", ".bashrc.local")
-  install_map =  { }
+    install_map = {
+        "install": None,
+        "uninstall": None,
+        ".git": None,
+        ".gitattributes": None,
+        ".bashrc.local": None
+    }
 
-  standard_files = (file for file in os.listdir(".") if file not in ignored_files and file not in install_map)
+    for item in os.listdir("."):
+        if item not in install_map:
+            if os.path.isdir(item):
+                install_map[item] = "~/.config"
+            else:
+                install_map[item] = "~/"
+    return install_map
 
-  for item in standard_files:
-    if os.path.isdir(item):
-      install_map[item] = "~/.config"
-    else:
-      install_map[item] = "~/"
-
-  return install_map
 
 def run_install():
-  install_map = get_install_map()
-  for src,dst in install_map.items():
-    src_path  = os.path.abspath(os.path.expanduser(src))
-    dest_path = os.path.expanduser(os.path.join(dst,src))
-    print("Installing %s to %s"%(src_path,dest_path))
-    try:
-      os.symlink(src_path,dest_path)
-    except:
-      print("Could not install {}".format(src_path))
+    install_map = get_install_map()
+    for src, dst in install_map.items():
+        src_path = os.path.abspath(os.path.expanduser(src))
+        dest_path = os.path.expanduser(os.path.join(dst, src))
+        print("Installing %s to %s" % (src_path, dest_path))
+        try:
+            os.symlink(src_path, dest_path)
+        except OSError:
+            print("Could not install {}".format(src_path))
+
 
 def run_uninstall():
-  install_map = get_install_map()
-  for src,dst in install_map.items():
-    dest_path = os.path.expanduser(os.path.join(dst,src))
-    print("Removing %s"%dest_path)
-    try:
-      os.unlink(dest_path)
-    except:
-      print("Could Not Remove {}".format(dest_path))
+    install_map = get_install_map()
+    for src, dst in install_map.items():
+        dest_path = os.path.expanduser(os.path.join(dst, src))
+        print("Removing %s" % dest_path)
+        try:
+            os.unlink(dest_path)
+        except OSError:
+            print("Could Not Remove {}".format(dest_path))
 
 
-
-if __name__=="__main__":
-  print(sys.argv[0])
-  if os.path.basename(sys.argv[0]) =="install":
-    run_install()
-  else:
-    run_uninstall()
+if __name__ == "__main__":
+    print(sys.argv[0])
+    if os.path.basename(sys.argv[0]) == "install":
+        run_install()
+    else:
+        run_uninstall()

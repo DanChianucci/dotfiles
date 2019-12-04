@@ -56,7 +56,7 @@ set_prompt () {
 
     if [ ! -z "$CUSTOM_PS1_CMD" ]; then
       custom_val=$($CUSTOM_PS1_CMD)
-      if [[ "$custom_val" = "?" || $custom_val -gt 0 ]]; then
+      if [ ! -z $custom_val ]; then
           PS1+=$(colorize purple "[$custom_val]")
       fi
     fi

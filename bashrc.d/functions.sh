@@ -12,7 +12,7 @@ function run_with_timeout () {
       child=$!                                   #hold onto the childs PID
       trap -- "" SIGTERM                         #Avoid default notification in non-interactive shell for SIGTERM
 
-      ( sleep $time;  kill $child 2>/dev/null) & #Wait for time, and then kill child
+      ( sleep "$time";  kill $child 2>/dev/null) & #Wait for time, and then kill child
       wait $child                                #Wait until child finishes or it is killed
     )
 }
@@ -46,7 +46,7 @@ function calc {
 }
 
 function pathmunge () {
-  if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
+  if ! echo "$PATH" | grep -E -q "(^|:)$1($|:)" ; then
     if [ "$2" = "after" ] ; then
       PATH=$PATH:$1
     else
@@ -56,14 +56,14 @@ function pathmunge () {
 }
 
 function ppath {
-  tr ':' '\n' <<< $PATH
+  tr ':' '\n' <<< "$PATH"
 }
 
 #Interprets the first argument as a command name and calls the command for each subsequent arguemnt
 function multi {
   cmd="${1}"
   for i in "${@:2}"; do
-    eval $cmd "$i"
+    eval "$cmd" "$i"
   done
 }
 
@@ -83,16 +83,16 @@ function highlight() {
 }
 
 function ccat(){
-  cat $1 | highlight green "\(SUCCESS\|PASS\)" |highlight red "\(FAILURE\|FAIL\|ERROR\|ERR\)"| highlight yellow "\(WARNING\|WARN\)" | highlight blue "\(INFO\|DEBUG\)"
+  highlight green "\(SUCCESS\|PASS\)" < "$1" | highlight red "\(FAILURE\|FAIL\|ERROR\|ERR\)" | highlight yellow "\(WARNING\|WARN\)" | highlight blue "\(INFO\|DEBUG\)"
 }
 
 
 function catlog(){
-  ccat *.log
+  ccat ./*.log
 }
 
 function bigfiles(){
-  find $1 -type f -exec du -a {} + | sort -rn |  head
+  find "$1" -type f -exec du -a {} + | sort -rn |  head
 }
 
 
@@ -111,26 +111,33 @@ function wait_file() {
 
 function colors(){
   DOTS='•••'
-  printf "\n                 40m     41m     42m     43m     44m     45m     46m     47m\n";
-  for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
-             '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
-             '  36m' '1;36m' '  37m' '1;37m'; do
-    FG=${FGs// /}
-    printf " $FGs \033[$FG  $DOTS  "
-    for BG in 40m 41m 42m 43m 44m 45m 46m 47m; do
-      printf "$EINS \033[$FG\033[$BG  $DOTS  \033[0m";
-    done
-    printf "\n"
+
+
+  printf "\n      "
+  for BG in "" {40..47}m; do
+    printf "%8s" "${BG}"
   done
   printf "\n"
+
+
+  for FORE in "" {30..37}; do
+    for BLD in "" "1;"; do
+      FG="${BLD}${FORE}"
+      printf "%8s" "${FG}m"
+      printf " \033[%s  %s  \033[0m"  "${FG}m" "$DOTS";
+      for BG in {40..47}; do
+         printf " \033[%s%s  %s  \033[0m"  "${FG};" "${BG}m" "$DOTS";
+      done
+      printf "\n"
+    done
+  done
 }
 
 
-function attach()
-{
+function attach() {
   if [ $# -eq 0 ]; then
-    tmux attach >/dev/null 2>&1 || tmux new-session
+    tmux "attach" >/dev/null 2>&1 || tmux new-session
   else
-    tmux new-session -AP -F "Created New Session: #{session_name}" -s $1
+    tmux "new-session" -AP -F "Created New Session: #{session_name}" -s "$1"
   fi
 }

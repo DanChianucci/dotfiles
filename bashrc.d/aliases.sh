@@ -11,17 +11,12 @@ alias ll.="ls -lAh"
 alias l="ls"
 alias l.="ls -d .*"
 
-
-
 if rm -I --version > /dev/null 2>&1; then
   alias rm="rm -I"
 fi
 
-
 alias tree="tree -Csuh"
-
 alias reload="reset && source ~/.bashrc"
-
 
 alias cls="clear"
 alias clc="clear"
@@ -30,12 +25,8 @@ alias top=htop
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias histg="history | grep"
 
-
-
 alias watch="watch "
-
 alias xww="find . -type f -perm /200"
-
 
 alias fbacks='find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc" -type f'
 alias rmb='rm `fbacks`'

@@ -98,13 +98,11 @@ function bigfiles(){
 
 #https://superuser.com/questions/878640/unix-script-wait-until-a-file-exists
 function wait_file() {
-  local file="'$1'"; shift
+  local file="$1"; shift
   local wait_seconds="${1:-10}"; shift # 10 seconds as default timeout
-
-  until test $((wait_seconds--)) -eq 0 -o -f "$(find . -name '$file' | head -1)" ; do
+  until test $((wait_seconds--)) -eq 0 -o -f "$(find . -name "$file" | head -1)" ; do
     sleep 1;
   done
-
   ((++wait_seconds))
 }
 

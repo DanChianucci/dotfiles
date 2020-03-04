@@ -38,7 +38,7 @@ function colorize(){
 
   fg_c=${color_map[$1]:-$1}
   fg_rst="\[\e[0m\]"
-  echo -e $fg_c$2$fg_rst
+  echo -e "$fg_c$2$fg_rst"
 }
 
 
@@ -52,11 +52,11 @@ set_prompt () {
         PS1+=$(colorize red '($?)\n')
     fi
 
-    PS1+=$(colorize ${PROMPT_COLOR:-blue} "$(whoami)@\h")       #<username>@<hostname>[jobs]: <directory>$
+    PS1+=$(colorize "${PROMPT_COLOR:-blue}" "$(whoami)@\h")       #<username>@<hostname>[jobs]: <directory>$
 
-    if [ ! -z "$CUSTOM_PS1_CMD" ]; then
+    if [ -n "$CUSTOM_PS1_CMD" ]; then
       custom_val=$($CUSTOM_PS1_CMD)
-      if [ ! -z $custom_val ]; then
+      if [ -n "$custom_val" ]; then
           PS1+=$(colorize purple "[$custom_val]")
       fi
     fi
@@ -64,14 +64,14 @@ set_prompt () {
     PS1+=": "
     PS1+=$(colorize green '\w ') # shortened working directory
 
-    if [ ! -z "$CONDA_PROMPT_MODIFIER" ]; then
+    if [ -n "$CONDA_PROMPT_MODIFIER" ]; then
         PS1+=$(colorize purple "$CONDA_PROMPT_MODIFIER")
     fi
 
     # Add git information
     local git_br
     git_br=$(git branch --color=never 2> /dev/null | sed -e '/^[^*]/d' -e 's/^\*\s*//')
-    if [ ! -z "$git_br" ]; then
+    if [ -n "$git_br" ]; then
         PS1+=$(colorize yellow "($git_br)")
     fi
 

@@ -25,6 +25,8 @@ def get_install_map():
 def run_install():
     install_map = get_install_map()
     for src, dst in install_map.items():
+        if dst is None:
+            continue
         src_path = os.path.abspath(os.path.expanduser(src))
         dest_path = os.path.expanduser(os.path.join(dst, src))
         print("Installing %s to %s" % (src_path, dest_path))
@@ -37,6 +39,8 @@ def run_install():
 def run_uninstall():
     install_map = get_install_map()
     for src, dst in install_map.items():
+        if dst is None:
+             continue
         dest_path = os.path.expanduser(os.path.join(dst, src))
         print("Removing %s" % dest_path)
         try:

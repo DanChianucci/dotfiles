@@ -33,11 +33,25 @@ function man() {
         LESS_TERMCAP_ue=$'\E[0m' \
         man "$@"
 }
+function  mac(){
+  #!/bin/bash
+  # getmacifup.sh: Print active NICs MAC addresses
+  D='/sys/class/net'
+  for nic_dir in "$D"/*
+  do
+      read -r operstate < "$nic_dir"/operstate
+      if [ "$operstate" = "up" ]; then
+        nic=${nic_dir:15}
+        read -r addr < "$nic_dir"/address
+        echo "$nic = $addr"
+      fi
+  done
+}
 
 function domain(){
   echo "User:   " "$(whoami)"
   echo "Host:   " "$(hostname)"
-  echo "MAC:    " "$(cat /sys/class/net/em1/address)"
+  echo "MAC:    " "$(mac)"
   echo "Domain: " "$(domainname)"
 }
 

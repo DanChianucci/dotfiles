@@ -42,7 +42,7 @@ function  mac(){
   do
       if [ -e "$nic_dir"/operstate ]; then
         read -r operstate < "$nic_dir"/operstate
-        if [ "$operstate" = "up" ]; then
+        if [ "$operstate" = "up" ] && [ -e "$nic_dir"/address ]; then
           nic=${nic_dir:15}
           read -r addr < "$nic_dir"/address
           echo "$nic = $addr"

@@ -112,7 +112,7 @@ def clearscreen():
     try:
         return '\r'
     finally:
-        os.system('clear')
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
 class FuncCaller:

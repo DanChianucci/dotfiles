@@ -34,6 +34,16 @@ function colorize(){
   color_map__magenta="\[\e[0;35m\]"
   color_map__cyan="\[\e[0;36m\]"
 
+  color_map__bright_white="\[\e[1;0m\]"
+  color_map__bright_black="\[\e[1;30m\]"
+  color_map__bright_red="\[\e[1;31m\]"
+  color_map__bright_green="\[\e[1;32m\]"
+  color_map__bright_yellow="\[\e[1;33m\]"
+  color_map__bright_blue="\[\e[1;34m\]"
+  color_map__bright_purple="\[\e[1;35m\]"
+  color_map__bright_magenta="\[\e[1;35m\]"
+  color_map__bright_cyan="\[\e[1;36m\]"
+
   key="color_map__$1"
   fg_c=${!key:-$1}
   fg_rst="\[\e[0m\]"

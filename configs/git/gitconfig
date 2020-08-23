@@ -3,6 +3,7 @@
   safecrlf = warn
   eol      = lf
   editor   = vim +star
+  excludesfile = ~/.gitignore_global
 
 [user]
   name  = Dan Chianucci

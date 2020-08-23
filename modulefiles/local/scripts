@@ -1,6 +1,0 @@
-#%Module
-
-set     basepath     "/home/chianucci/scripts"
-
-append-path PATH "${basepath}"
-append-path PATH "${basepath}/vcs_dump"

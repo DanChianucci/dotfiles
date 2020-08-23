@@ -1,57 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env bash
 
-import os
-import sys
+set -e
 
+CONFIG="install.conf.yaml"
+DOTBOT_DIR="dotbot"
 
-def get_install_map():
-    install_map = {
-        "install": None,
-        "uninstall": None,
-        ".git": None,
-        ".gitattributes": None,
-        ".bashrc.local": None
-    }
+DOTBOT_BIN="bin/dotbot"
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-    for item in os.listdir("."):
-        if item not in install_map:
-            if os.path.isdir(item):
-                install_map[item] = "~/.config"
-            else:
-                install_map[item] = "~/"
-    return install_map
+cd "${BASEDIR}"
+git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
+git submodule update --init --recursive "${DOTBOT_DIR}"
 
-
-def run_install():
-    install_map = get_install_map()
-    for src, dst in install_map.items():
-        if dst is None:
-            continue
-        src_path = os.path.abspath(os.path.expanduser(src))
-        dest_path = os.path.expanduser(os.path.join(dst, src))
-        print("Installing %s to %s" % (src_path, dest_path))
-        try:
-            os.symlink(src_path, dest_path)
-        except OSError:
-            print("Could not install {}".format(src_path))
-
-
-def run_uninstall():
-    install_map = get_install_map()
-    for src, dst in install_map.items():
-        if dst is None:
-             continue
-        dest_path = os.path.expanduser(os.path.join(dst, src))
-        print("Removing %s" % dest_path)
-        try:
-            os.unlink(dest_path)
-        except OSError:
-            print("Could Not Remove {}".format(dest_path))
-
-
-if __name__ == "__main__":
-    print(sys.argv[0])
-    if os.path.basename(sys.argv[0]) == "install":
-        run_install()
-    else:
-        run_uninstall()
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"

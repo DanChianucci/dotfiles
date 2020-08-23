@@ -1,0 +1,22 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.gitconfig        : configs/git/gitconfig
+    ~/.gitignore_global : configs/git/gitignore_global
+
+    ~/.bashrc.d         : configs/bash/bashrc.d
+    ~/.bash_profile     : configs/bash/bash_profile
+    ~/.bashrc           : configs/bash/bashrc
+    ~/.inputrc          : configs/bash/inputrc
+    ~/.dircolors        : configs/bash/dircolors
+
+    ~/.pythonstartup    : configs/other/pythonstartup
+    ~/.vimrc            : configs/other/vimrc
+    ~/.tmux.conf        : configs/other/tmux.conf
+
+- shell:
+    - [touch ~/.gitconfig.local, Creating the local git config file]

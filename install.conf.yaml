@@ -8,7 +8,7 @@
     ~/.gitconfig        : configs/git/gitconfig
     ~/.gitignore_global : configs/git/gitignore_global
 
-    ~/.bashrc.d         : configs/bash/bashrc.d
+    ~/.config/bashrc.d  : configs/bash/bashrc.d
     ~/.bash_profile     : configs/bash/bash_profile
     ~/.bashrc           : configs/bash/bashrc
     ~/.inputrc          : configs/bash/inputrc

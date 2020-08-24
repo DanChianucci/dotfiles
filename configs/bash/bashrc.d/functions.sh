@@ -73,7 +73,9 @@ function pathmunge () {
 }
 
 function ppath {
-  tr ':' '\n' <<< "$PATH"
+  pathvar="${1:-$PATH}"
+
+  tr ':' '\n' <<< "$pathvar"
 }
 
 #Interprets the first argument as a command name and calls the command for each subsequent arguemnt

@@ -20,3 +20,4 @@
 
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]
+    - [touch ~/.bashrc.local, Creating the local bashrc file]

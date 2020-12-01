@@ -158,3 +158,15 @@ function attach() {
     tmux "new-session" -AP -F "Created New Session: #{session_name}" -s "$1"
   fi
 }
+
+
+upscript="$(dirname "${BASH_SOURCE[0]}")/up.py"
+function up() {
+  dirname=$($upscript "$@")
+  retcode="$?"
+  if [ $retcode -eq 0 ]; then
+    cd "$dirname" || return 102
+  else
+    return "$retcode"
+  fi
+}

@@ -29,6 +29,6 @@ alias watch="watch "
 alias xww="find . -type f -perm /200"
 
 alias fbacks='find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc" -type f'
-alias rmb='rm `fbacks`'
+alias rmb='rm $(fbacks)'
 
 alias weather="curl wttr.in"

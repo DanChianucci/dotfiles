@@ -52,8 +52,10 @@ function colorize(){
 
 
 #Customization
-# PROMPT_COLOR   - Color of the user@domain string (name or escape sequence)
-# CUSTOM_PS1_CMD - Custom Command to run places the output inside [] before the directory
+# PROMPT_COLOR          - Color of the user@domain string (name or escape sequence)
+# CUSTOM_PS1_CMDS       - Custom Command to run places the output inside [] before the directory
+#                         Multiple commands can be seperated by ;'.  each string is run through eval so commads will be replaced by the output
+#                         ex '$(mycommand);hello'  is replaced with the outputs of mycommand folled by the string hello
 set_prompt () {
     local last_command=$?
     PS1=''
@@ -63,19 +65,22 @@ set_prompt () {
 
     PS1+=$(colorize "${PROMPT_COLOR:-blue}" "$(whoami)@\h")       #<username>@<hostname>[jobs]: <directory>$
 
-    if [ -n "$CUSTOM_PS1_CMD" ]; then
-      custom_val=$($CUSTOM_PS1_CMD)
-      if [ -n "$custom_val" ]; then
-          PS1+=$(colorize purple "[$custom_val]")
-      fi
+    if [ -n "$CUSTOM_PS1_CMDS" ]; then
+        PS1+='\[\e[0;35m\]'
+        OLDIFS=$IFS
+        IFS=";"
+        for i in ${CUSTOM_PS1_CMDS}; do
+            v="$(eval echo "$i") "
+            if [[ -n "${v// }" ]]; then
+              PS1+="$v "
+            fi
+        done
+        IFS=$OLDIFS
+        PS1+="\[\e[0m\]"
     fi
 
     PS1+=": "
     PS1+=$(colorize green '\w ') # shortened working directory
-
-    if [ -n "$CONDA_PROMPT_MODIFIER" ]; then
-        PS1+=$(colorize purple "$CONDA_PROMPT_MODIFIER")
-    fi
 
     # Add git information
     local git_br

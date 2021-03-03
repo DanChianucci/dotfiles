@@ -9,7 +9,7 @@
     ~/.gitignore_global : configs/git/gitignore_global
 
     ~/.config/bashrc.d  : configs/bash/bashrc.d
-    ~/.bash_profile     : configs/bash/bash_profile
+    ~/.profile          : configs/bash/profile
     ~/.bashrc           : configs/bash/bashrc
     ~/.inputrc          : configs/bash/inputrc
     ~/.dircolors        : configs/bash/dircolors
@@ -21,3 +21,4 @@
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]
     - [touch ~/.bashrc.local, Creating the local bashrc file]
+    - [touch ~/.profile.local, Creating the local profile file]

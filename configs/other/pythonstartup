@@ -10,6 +10,9 @@ from pprint import pprint
 sys.path.append(os.getenv("PWD"))
 
 
+
+
+
 ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33,
              "blue": 34, "purple": 35, "cyan": 36, "white": 37}
 
@@ -31,16 +34,22 @@ def ansi_colorize(text, color, state, prompt=False):
 
 
 class CustomPS1:
-    def __str__(self, prompt=True):
-        return ansi_colorize(">>> ", "green", "bold", prompt=prompt)
+    def __init__(self, prompt=True):
+        self.prompt = prompt
+
+    def __str__(self):
+        return ansi_colorize(">>> ", "green", "bold", prompt=self.prompt)
 
     def __len__(self):
         return 4
 
 
 class CustomPS2:
-    def __str__(self, prompt=True):
-        return ansi_colorize("... ", "yellow", "bold", prompt=prompt)
+    def __init__(self, prompt=True):
+        self.prompt = prompt
+
+    def __str__(self):
+        return ansi_colorize("... ", "yellow", "bold", prompt=self.prompt)
 
     def __len__(self):
         return 4
@@ -48,7 +57,8 @@ class CustomPS2:
 
 def setup_prompt():
     if os.name == 'nt':
-        pass
+        sys.ps1 = CustomPS1(False)
+        sys.ps2 = CustomPS2(False)
     else:
         sys.ps1 = CustomPS1()
         sys.ps2 = CustomPS2()
@@ -105,6 +115,14 @@ def setup_readline():
         pass
 
 
+def setup_windows_color():
+    try:
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+    except (ImportError,AttributeError):
+        pass
+
 ################################################################################
 # Custom No Argument Commends
 ################################################################################
@@ -133,3 +151,4 @@ if __name__ == "__main__":
     __builtins__.exit = FuncCaller(sys.exit)
     setup_readline()
     setup_prompt()
+    setup_windows_color()

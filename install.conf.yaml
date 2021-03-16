@@ -17,6 +17,7 @@
     ~/.pythonstartup    : configs/other/pythonstartup
     ~/.vimrc            : configs/other/vimrc
     ~/.tmux.conf        : configs/other/tmux.conf
+    ~/.condarc          : configs/other/condarc
 
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]

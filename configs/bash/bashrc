@@ -17,6 +17,8 @@ if [[ -d ~/.config/bashrc.d && -r ~/.config/bashrc.d && -x ~/.config/bashrc.d ]]
   done
 fi
 
+cleanpath
+
 if [ -f ~/.bashrc.local ]; then
   source ~/.bashrc.local
 fi

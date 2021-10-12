@@ -21,7 +21,10 @@ alias reload="reset && source ~/.bashrc"
 alias cls="clear"
 alias clc="clear"
 
-alias top=htop
+if command -v htop > /dev/null; then
+  alias top=htop
+fi
+
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias histg="history | grep"
 

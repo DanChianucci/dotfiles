@@ -1,0 +1,54 @@
+#!/bin/csh
+
+#exit if non interactive
+if ( ! $?prompt ) exit
+if ( ! $?term ) exit
+
+
+# Configure terminal behavior
+stty sane -parity
+stty -ixon                      # prevent Ctrl-S from locking up the terminal
+setenv TERM $term
+limit coredumpsize 0
+
+set visiblebell
+set autolist                    # Set terminal to list tab complete options when ambiguous
+set color                       # Enable 'ls' colors. Custom colors can be set with $LS_COLORS environment variable
+set colorcat                    # Enable color for NLS messages. (informational messages from commands)
+set filec
+set nonomatch
+set notify
+set noclobber
+
+
+# Syncronize history between all terminals
+set history=2000  # save last 2000 commands
+set histdup=erase # remove duplicate commands
+set savehist=(2000 merge)
+
+
+# [[ ":$PATH:" != *":/path/to/add:"* ]] && PATH="/path/to/add:${PATH}"
+
+set path = ( $path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin)
+
+
+if( -d ~/.config/cshrc.d && -r  ~/.config/cshrc.d && -x  ~/.config/cshrc.d ) then
+  foreach file (~/.config/cshrc.d/*.csh)
+    if (-f "$file" && -r "$file") then
+      source "$file"
+    endif
+  end
+endif
+
+if( -d ~/.cshrc.local.d && -r  ~/.cshrc.local.d && -x  ~/.cshrc.local.d ) then
+  foreach file (~/.cshrc.local.d/*.csh)
+    if (-f "$file" && -r "$file") then
+      source "$file"
+    endif
+  end
+endif
+
+if ( -f ~/.cshrc.local && -r ~/.cshrc.local ) then
+      source ~/.cshrc.local
+      null
+endif

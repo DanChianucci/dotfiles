@@ -11,9 +11,13 @@
     ~/.config/bashrc.d  : configs/bash/bashrc.d
     ~/.profile          : configs/bash/profile
     ~/.bashrc           : configs/bash/bashrc
-    ~/.inputrc          : configs/bash/inputrc
-    ~/.dircolors        : configs/bash/dircolors
 
+    ~/.config/cshrc.d  : configs/csh/cshrc.d
+    ~/.cshrc           : configs/csh/cshrc
+
+
+    ~/.inputrc          : configs/other/inputrc
+    ~/.dircolors        : configs/other/dircolors
     ~/.pythonstartup    : configs/other/pythonstartup
     ~/.vimrc            : configs/other/vimrc
     ~/.tmux.conf        : configs/other/tmux.conf

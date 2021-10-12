@@ -1,31 +1,37 @@
 #!/bin/bash
 
+
+function colorcode() {
+    declare -A color_map
+    color_map[white]="\e[0;0m"
+    color_map[black]="\e[0;30m"
+    color_map[red]="\e[0;31m"
+    color_map[green]="\e[0;32m"
+    color_map[yellow]="\e[0;33m"
+    color_map[blue]="\e[0;34m"
+    color_map[purple]="\e[0;35m"
+    color_map[magenta]="\e[0;35m"
+    color_map[cyan]="\e[0;36m"
+
+    color_map[bright_white]="\e[1;0m"
+    color_map[bright_black]="\e[1;30m"
+    color_map[bright_red]="\e[1;31m"
+    color_map[bright_green]="\e[1;32m"
+    color_map[bright_yellow]="\e[1;33m"
+    color_map[bright_blue]="\e[1;34m"
+    color_map[bright_purple]="\e[1;35m"
+    color_map[bright_magenta]="\e[1;35m"
+    color_map[bright_cyan]="\e[1;36m"
+
+    color_map[reset]="\e[0m"
+    colorcode=${color_map[$1]:-$1}
+    echo -e "$colorcode"
+}
 # shellcheck disable=SC2034
 function colorize() {
-  color_map__white="\[\e[0;0m\]"
-  color_map__black="\[\e[0;30m\]"
-  color_map__red="\[\e[0;31m\]"
-  color_map__green="\[\e[0;32m\]"
-  color_map__yellow="\[\e[0;33m\]"
-  color_map__blue="\[\e[0;34m\]"
-  color_map__purple="\[\e[0;35m\]"
-  color_map__magenta="\[\e[0;35m\]"
-  color_map__cyan="\[\e[0;36m\]"
-
-  color_map__bright_white="\[\e[1;0m\]"
-  color_map__bright_black="\[\e[1;30m\]"
-  color_map__bright_red="\[\e[1;31m\]"
-  color_map__bright_green="\[\e[1;32m\]"
-  color_map__bright_yellow="\[\e[1;33m\]"
-  color_map__bright_blue="\[\e[1;34m\]"
-  color_map__bright_purple="\[\e[1;35m\]"
-  color_map__bright_magenta="\[\e[1;35m\]"
-  color_map__bright_cyan="\[\e[1;36m\]"
-
-  key="color_map__$1"
-  fg_c=${!key:-$1}
-  fg_rst="\[\e[0m\]"
-  echo -e "$fg_c$2$fg_rst"
+  fg_c=$(colorcode "$1")
+  fg_rst="\e[0m"
+  echo -e "\[$fg_c\]$2\[$fg_rst\]"
 }
 
 # Returns (svn:<revision>:<branch|tag>[*]) if applicable
@@ -58,22 +64,24 @@ svn_parse_branch() {
 
 
     if ! url=$(echo "$1" | awk '/^URL: .*/{print $2}')  ; then
-        echo trunk
-        return
+        echo trunk && return
     else
-        # first check /branches/releases
-        chunk=$(echo "${url}" | grep -o "/releases.*")
-        if [ "${chunk}" == "" ] ; then
-            # then check for some other branch
-            chunk=$(echo "${url}" | grep -o "/branches.*")
-            if [ "${chunk}" == "" ] ; then
-                # last check for a tag
-                chunk=$(echo "${url}" | grep -o "/tags.*")
-            fi
-        fi
+        chunk="$(echo "${url}" | sed -n 's/.*\breleases\/\b//p' | egrep -o '^[^/]+')"
+        [ -n "$chunk" ] &&  echo "rel:${chunk}" && return
+
+        chunk="$(echo "${url}" | sed -n 's/.*\bbranches\/\b//p' | egrep -o '^[^/]+')"
+        [ -n "$chunk" ] && echo "br:${chunk}" && return
+
+        chunk="$(echo "${url}" | sed -n 's/.*\btags\/\b//p' | egrep -o '^[^/]+')"
+        [ -n "$chunk" ] && echo "tag:${chunk}" && return
+
+        chunk="$(echo "${url}" | sed -n 's/.*\btrunk\/\b//p' | egrep -o '^[^/]+')"
+        [ -n "$chunk" ] && echo "trunk" && return
     fi
 
-    echo "${chunk}" | awk -F/ '{print $3}'
+
+    return 0
+
 }
 
 git_prompt(){
@@ -84,7 +92,6 @@ git_prompt(){
     fi
     return 1
 }
-
 
 #Customization
 # PROMPT_COLOR          - Color of the user@domain string (name or escape sequence)
@@ -98,6 +105,7 @@ set_prompt () {
         PS1+=$(colorize red '($?)\n')
     fi
 
+    PS1+=${CUSTOM_PS1_LEADER:-}
     PS1+=$(colorize "${PROMPT_COLOR:-blue}" "$(whoami)@\h")       #<username>@<hostname>[jobs]: <directory>$
 
     if [ -n "$CUSTOM_PS1_CMDS" ]; then

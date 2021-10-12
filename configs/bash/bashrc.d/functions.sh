@@ -72,6 +72,21 @@ function pathmunge () {
   fi
 }
 
+
+function varmunge () {
+    case ":${!1}:" in
+        *:"$2":*)
+            ;;
+        *)
+            if [ "$3" = "after" ] ; then
+                eval ${1}=${!1}:$2
+            else
+                eval ${1}=$2:${!1}
+            fi
+    esac
+}
+
+
 function cleanpath () {
   if [ -n "$PATH" ]; then
     old_PATH=$PATH:;

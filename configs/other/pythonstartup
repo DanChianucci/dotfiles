@@ -9,10 +9,6 @@ from pprint import pprint
 
 sys.path.append(os.getenv("PWD"))
 
-
-
-
-
 ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33,
              "blue": 34, "purple": 35, "cyan": 36, "white": 37}
 
@@ -138,8 +134,8 @@ class FuncCaller:
         from functools import partial
         self.func = partial(func, *args, **kwargs)
 
-    def __call__(self):
-        return self.func()
+    def __call__(self, *args, **kwargs):
+        return self.func(*args,**kwargs)
 
     __repr__ = __call__
 

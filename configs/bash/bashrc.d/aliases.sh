@@ -6,10 +6,14 @@ if ls --group-directories-first > /dev/null 2>&1; then
 else
   alias ls="ls $LS_COMMON"
 fi;
-alias ll="ls -lh"
-alias ll.="ls -lAh"
+
 alias l="ls"
 alias l.="ls -d .*"
+alias la.="ls -A"
+
+alias ll="ls -lh"
+alias ll.="ls -lhd .*"
+alias lla.="ls -lhA"
 
 if rm -I --version > /dev/null 2>&1; then
   alias rm="rm -I"
@@ -29,7 +33,6 @@ alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias histg="history | grep"
 
 alias watch="watch "
-alias xww="find . -type f -perm /200"
 
 alias fbacks='find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc" -type f'
 alias rmb='rm $(fbacks)'

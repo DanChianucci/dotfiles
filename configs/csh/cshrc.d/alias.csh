@@ -1,7 +1,4 @@
 #/bin/csh
-
-
-
 alias reload "reset && source ~/.cshrc"
 alias ppath 'echo $PATH | tr ":" "\n"'
 
@@ -15,10 +12,15 @@ else
   alias ls "ls $LS_COMMON"
 endif
 
-alias ll "ls -lh"
-alias ll. "ls -lAh"
-alias l "ls"
-alias l. "ls -d .*"
+
+alias l   "ls"
+alias l.  "ls -d .*"
+alias la. "ls -A"
+
+alias ll   "ls -lh"
+alias ll.  "ls -lhd .*"
+alias lla. "ls -lhA"
+
 
 
 alias tree "tree -Csuh"
@@ -28,13 +30,12 @@ alias clc "clear"
 
 
 
-alias psg "ps aux | grep -v grep | grep -i -e VSZ -e"
+alias psg   "ps aux | grep -v grep | grep -i -e VSZ -e"
 alias histg "history | grep"
 
 alias watch "watch "
-alias xww "find . -type f -perm /200"
 
 alias fbacks 'find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc" -type f'
-alias rmb 'rm `fbacks`'
+alias rmb    'rm `fbacks`'
 
 alias weather "curl wttr.in"

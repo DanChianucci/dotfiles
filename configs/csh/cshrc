@@ -31,6 +31,10 @@ set savehist=(2000 merge)
 
 set path = ( $path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin)
 
+if ( -f ~/.cshrc.local && -r ~/.cshrc.local ) then
+    source $HOME/.cshrc.local
+    if($?) exit
+endif
 
 if( -d ~/.config/cshrc.d && -r  ~/.config/cshrc.d && -x  ~/.config/cshrc.d ) then
   foreach file (~/.config/cshrc.d/*.csh)
@@ -46,9 +50,4 @@ if( -d ~/.cshrc.local.d && -r  ~/.cshrc.local.d && -x  ~/.cshrc.local.d ) then
       source "$file"
     endif
   end
-endif
-
-if ( -f ~/.cshrc.local && -r ~/.cshrc.local ) then
-      source ~/.cshrc.local
-      null
 endif

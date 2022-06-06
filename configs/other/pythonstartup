@@ -7,6 +7,16 @@ import sys
 import math
 from pprint import pprint
 
+
+def try_import(package, name=None):
+    try:
+        name = package if name is None else name
+        globals()[name] =   __import__(package, fromlist=[""])
+    except ImportError:
+        pass
+
+
+
 sys.path.append(os.getenv("PWD"))
 
 ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33,
@@ -60,52 +70,51 @@ def setup_prompt():
         sys.ps2 = CustomPS2()
 
 
-def rl_autoindent():
-    """
-    Auto-indent upon typing a new line according to the contents of the
-    previous line.  This function will be used as Readline's
-    pre-input-hook.
-
-    """
-    hist_len = readline.get_current_history_length()
-    last_input = readline.get_history_item(hist_len)
-    try:
-        last_indent_index = last_input.rindex("  ")
-    except:
-        last_indent = 0
-    else:
-        last_indent = int(last_indent_index / 4) + 1
-
-    if len(last_input.strip()) > 1:
-        if last_input.count("(") > last_input.count(")"):
-            indent = ''.join(["  " for n in range(last_indent + 2)])
-
-        elif last_input.count(")") > last_input.count("("):
-            indent = ''.join(["  " for n in range(last_indent - 1)])
-
-        elif last_input.count("[") > last_input.count("]"):
-            indent = ''.join(["  " for n in range(last_indent + 2)])
-
-        elif last_input.count("]") > last_input.count("["):
-            indent = ''.join(["  " for n in range(last_indent - 1)])
-
-        elif last_input.count("{") > last_input.count("}"):
-            indent = ''.join(["  " for n in range(last_indent + 2)])
-
-        elif last_input.count("}") > last_input.count("{"):
-            indent = ''.join(["  " for n in range(last_indent - 1)])
-
-        elif last_input[-1] == ":":
-            indent = ''.join(["  " for n in range(last_indent + 1)])
-
-        else:
-            indent = ''.join(["  " for n in range(last_indent)])
-    readline.insert_text(indent)
-
 
 def setup_readline():
     try:
         import readline
+        def rl_autoindent():
+            """
+            Auto-indent upon typing a new line according to the contents of the
+            previous line.  This function will be used as Readline's
+            pre-input-hook.
+
+            """
+            hist_len = readline.get_current_history_length()
+            last_input = readline.get_history_item(hist_len)
+            try:
+                last_indent_index = last_input.rindex("  ")
+            except:
+                last_indent = 0
+            else:
+                last_indent = int(last_indent_index / 4) + 1
+
+            if len(last_input.strip()) > 1:
+                if last_input.count("(") > last_input.count(")"):
+                    indent = ''.join(["  " for n in range(last_indent + 2)])
+
+                elif last_input.count(")") > last_input.count("("):
+                    indent = ''.join(["  " for n in range(last_indent - 1)])
+
+                elif last_input.count("[") > last_input.count("]"):
+                    indent = ''.join(["  " for n in range(last_indent + 2)])
+
+                elif last_input.count("]") > last_input.count("["):
+                    indent = ''.join(["  " for n in range(last_indent - 1)])
+
+                elif last_input.count("{") > last_input.count("}"):
+                    indent = ''.join(["  " for n in range(last_indent + 2)])
+
+                elif last_input.count("}") > last_input.count("{"):
+                    indent = ''.join(["  " for n in range(last_indent - 1)])
+
+                elif last_input[-1] == ":":
+                    indent = ''.join(["  " for n in range(last_indent + 1)])
+
+                else:
+                    indent = ''.join(["  " for n in range(last_indent)])
+            readline.insert_text(indent)
         readline.set_pre_input_hook(rl_autoindent)
     except ImportError:
         pass
@@ -145,6 +154,12 @@ class FuncCaller:
 if __name__ == "__main__":
     __builtins__.clear = FuncCaller(clearscreen)
     __builtins__.exit = FuncCaller(sys.exit)
+
+    try_import("numpy","np")
+    try_import("pandas","pd")
+    try_import("matplotlib","mpl")
+    try_import("matplotlib.pyplot","plt")
+
     setup_readline()
     setup_prompt()
     setup_windows_color()

@@ -19,23 +19,20 @@ set   white="%{\033[0;37m%}"
 set  yellow="%{\033[0;33m%}"
 set     end="%{\033[0m%}"
 
-# The "end" color is reccomended at the end of the
-# prompt in order to set the text color back to the
-# default if using terminals with both light and
-# dark backrounds. This is because there is no
-# reliable way to determine the background color
-# when opening a new terminal.
-# Note that a space is required after setting ${end}
-# in order for it to reset the color properly.
 
-# Set the actual prompt.
-# user@hostname dir $
-# alias set_prompt 'set prompt="'"${green}"'%n@%m %c3'"${white}"'$ '"${end}"' "'
-# alias set_prompt 'set prompt="'"${green}"'%n@%m:'"${blue}"'%~'"${white}"'$ '"${end}"'"'
-# set_prompt
-set prompt = "${red}csh> ${green}%n@%m: ${blue}%~${white}$ ${end}"
+set default_group=`/bin/id -g -n dchu`
+set group=`/bin/id -g -n`
+if ("$group" != "$default_group") then
+    set group = "${red}($group) ${green}"
+else
+    set group
+endif
+
+
+set prompt = "${red}csh> ${green}%n${green}@%m $group\: ${blue}%~${end} $ "
 
 # Cleanup
+unset default_group group
 unset red green yellow blue magenta cyan yellow white end
 
 
@@ -47,9 +44,9 @@ unset red green yellow blue magenta cyan yellow white end
 # you wish to bind for backward history search and so on.
 
 # bind -f ~/.inputrc
-bindkey "\e[3~"  delete-char            #DELETE
-bindkey "\e[1~"  beginning-of-line      #HOME
-bindkey "\e[5~"  end-of-line            #END
+bindkey "\e[3~"  delete-char             #DELETE
+bindkey "\e[1~"  beginning-of-line       #HOME
+bindkey "\e[5~"  end-of-line             #END
 bindkey "\e[A"   history-search-backward #UP
 bindkey "\e[B"   history-search-forward  #DOWN
 bindkey "\e[C"   forward-char            #RIGHT

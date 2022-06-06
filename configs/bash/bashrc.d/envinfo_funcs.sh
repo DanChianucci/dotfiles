@@ -1,6 +1,7 @@
-# Returns (svn:<revision>:<branch|tag>[*]) if applicable
-function svn_branch_info() {
+#!/bin/bash
 
+# Returns (svn  <branch> <rev>) if applicable
+function svn_branch_info() {
     local branch dirty rev info
     if info=$(svn info 2>/dev/null); then
         branch=$(svn_parse_branch "${info}")
@@ -14,35 +15,34 @@ function svn_branch_info() {
         # [ "$(svn status)" ] && dirty='*'
 
         if [ "$branch" != "" ] ; then
-            echo "svn:${branch}${dirty}:${rev}"
+            echo "svn ${branch}${dirty} r${rev}"
         fi
         return 0
     fi
     return 1
-
 }
 
 # Returns the current branch or tag name from the given `svn info` output
 function svn_parse_branch() {
     local chunk url
 
-
     if ! url=$(echo "$1" | awk '/^URL: .*/{print $2}')  ; then
-        echo trunk && return
+        echo "trunk" && return
     else
-        chunk="$(echo "${url}" | sed -n 's/.*\breleases\/\b//p' | grep -E -o '^[^/]+')"
-        [ -n "$chunk" ] &&  echo "rel:${chunk}" && return
+        declare -A match_types
+        match_types["^"]="trunk"
+        match_types["tg"]="tags"
+        match_types["rl"]="releases"
+        match_types["us"]="branches\/user"
+        match_types["fe"]="branches\/feature"
+        match_types["br"]="branches"
 
-        chunk="$(echo "${url}" | sed -n 's/.*\bbranches\/\b//p' | grep -E -o '^[^/]+')"
-        [ -n "$chunk" ] && echo "br:${chunk}" && return
-
-        chunk="$(echo "${url}" | sed -n 's/.*\btags\/\b//p' | grep -E -o '^[^/]+')"
-        [ -n "$chunk" ] && echo "tag:${chunk}" && return
-
-        chunk="$(echo "${url}" | sed -n 's/trunk//p' | grep -E -o '^[^/]+')"
-        [ -n "$chunk" ] && echo "trunk" && return
+        for matchtype in ^ tg rl us fe br; do
+            ptrn=${match_types["$matchtype"]}
+            chunk="$(echo "${url}" | sed -n "s/.*\b${ptrn}\/\b//p" | grep -E -o '^[^/]+')"
+            [ -n "$chunk" ] && echo "${matchtype}:${chunk}" && return 3
+        done
     fi
-
 
     return 0
 

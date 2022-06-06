@@ -30,18 +30,23 @@ function svn_parse_branch() {
         echo "trunk" && return
     else
         declare -A match_types
-        match_types["^"]="trunk"
         match_types["tg"]="tags"
         match_types["rl"]="releases"
         match_types["us"]="branches\/user"
         match_types["fe"]="branches\/feature"
         match_types["br"]="branches"
 
-        for matchtype in ^ tg rl us fe br; do
+        for matchtype in tg rl us fe br; do
             ptrn=${match_types["$matchtype"]}
-            chunk="$(echo "${url}" | sed -n "s/.*\b${ptrn}\/\b//p" | grep -E -o '^[^/]+')"
+            chunk="$(echo "${url}/" | sed -n "s/.*\b${ptrn}\b//p" | grep -E -o '^[^/]+')"
             [ -n "$chunk" ] && echo "${matchtype}:${chunk}" && return 3
         done
+
+
+        chunk="$(echo "${url}" | sed -n 's/trunk//p' | grep -E -o '^[^/]+')"
+        [ -n "$chunk" ] && echo "trunk" && return 3
+
+
     fi
 
     return 0

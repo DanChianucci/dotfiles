@@ -12,9 +12,8 @@
     ~/.profile          : configs/bash/profile
     ~/.bashrc           : configs/bash/bashrc
 
-    ~/.config/cshrc.d  : configs/csh/cshrc.d
-    ~/.cshrc           : configs/csh/cshrc
-
+    ~/.config/cshrc.d   : configs/csh/cshrc.d
+    ~/.cshrc            : configs/csh/cshrc
 
     ~/.inputrc          : configs/other/inputrc
     ~/.dircolors        : configs/other/dircolors
@@ -25,5 +24,5 @@
 
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]
-    - [touch ~/.bashrc.local, Creating the local bashrc file]
-    - [touch ~/.profile.local, Creating the local profile file]
+    - [touch ~/.bashrc.local   , Creating the local bashrc file]
+    - [touch ~/.profile.local  , Creating the local profile file]

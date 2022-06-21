@@ -5,23 +5,24 @@
 - clean: ['~']
 
 - link:
-    ~/.gitconfig        : configs/git/gitconfig
-    ~/.gitignore_global : configs/git/gitignore_global
+    ~/.gitconfig            : configs/git/gitconfig
+    ~/.gitignore_global     : configs/git/gitignore_global
 
-    ~/.config/bashrc.d  : configs/bash/bashrc.d
-    ~/.profile          : configs/bash/profile
-    ~/.bashrc           : configs/bash/bashrc
+    ~/.config/bashrc.d      : configs/bash/bashrc.d
+    ~/.profile              : configs/bash/profile
+    ~/.bashrc               : configs/bash/bashrc
 
-    ~/.config/cshrc.d   : configs/csh/cshrc.d
-    ~/.cshrc            : configs/csh/cshrc
+    ~/.config/cshrc.d       : configs/csh/cshrc.d
+    ~/.cshrc                : configs/csh/cshrc
 
-    ~/.inputrc          : configs/other/inputrc
-    ~/.dircolors        : configs/other/dircolors
-    ~/.pythonstartup    : configs/other/pythonstartup
-    ~/.vimrc            : configs/other/vimrc
-    ~/.tmux.conf        : configs/other/tmux.conf
-    ~/.condarc          : configs/other/condarc
-
+    ~/.inputrc              : configs/other/inputrc
+    ~/.dircolors            : configs/other/dircolors
+    ~/.pythonstartup        : configs/other/pythonstartup
+    ~/.vimrc                : configs/other/vimrc
+    ~/.tmux.conf            : configs/other/tmux.conf
+    ~/.condarc              : configs/other/condarc
+    ~/.config/starship.toml : configs/other/starship.toml
+    # ~/profile.ps1 : configs/powershell/profile.ps1
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]
     - [touch ~/.bashrc.local   , Creating the local bashrc file]

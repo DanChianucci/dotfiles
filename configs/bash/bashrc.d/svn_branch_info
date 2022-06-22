@@ -1,0 +1,69 @@
+#!/bin/bash
+function svn_parse_rev() {
+    local rev
+    rev="$(svn --non-interactive info --no-newline --show-item revision 2>/dev/null)"
+    if [ "${rev}" != "" ] ; then
+        echo "$rev"
+        return 0
+    fi
+    return 1
+}
+
+
+function svn_parse_rooturl() {
+    local rev
+    root="$(svn --non-interactive info --no-newline --show-item repos-root-url 2>/dev/null)"
+    if [ "${root}" != "" ] ; then
+        echo "$root"
+        return 0
+    fi
+    return 1
+}
+
+
+function svn_parse_reponame() {
+    root="$(svn --non-interactive info --no-newline --show-item repos-root-url 2>/dev/null)"|| return 1
+
+    if [ -z ${SVN_ROOT+x} ]; then
+        repo=$(basename "$root")
+    else
+        repo=${root#"$SVN_ROOT"}
+    fi
+
+    echo "$repo"
+    return 0
+}
+
+function svn_parse_subrepo() {
+    url="$(svn --non-interactive info --no-newline --show-item relative-url 2>/dev/null)" || return 1
+    echo "${url}" | sed -n 's/\(\/\(branches\|tags\|releases\|trunk\)\/.*\)//p' | cut -f2 -d'/'
+    return 0
+}
+
+
+# Returns the current branch or tag name from the given `svn info` output
+function svn_parse_branch() {
+    local chunk url
+    url="$(svn --non-interactive info --no-newline --show-item relative-url 2>/dev/null)"
+    if [ "${url}" != "" ]; then
+        declare -A match_types
+        match_types["us"]="branches\/user\(_branches\)\?"
+        match_types["pr"]="branches\/project\(_branches\)\?"
+        match_types["fe"]="branches\/feature\(_branches\)\?"
+        match_types["br"]="branches"
+        match_types["rl"]="releases"
+        match_types["tg"]="tags"
+
+        for matchtype in us pr fe br rl tg ; do
+            ptrn=${match_types["$matchtype"]}
+            chunk="$(echo "${url}/" | sed -n "s/.*\b${ptrn}\/\b//p" | grep -E -o '^[^/]+')"
+            [ -n "$chunk" ] && echo "${matchtype}:${chunk}" && return 0
+        done
+
+        chunk="$(echo "${url}" | sed -n 's/trunk//p' | grep -E -o '^[^/]+')"
+        [ -n "$chunk" ] && echo "trunk" && return 0
+
+        echo "$url" && return 0
+    fi
+    return 1
+}

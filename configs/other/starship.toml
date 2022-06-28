@@ -8,7 +8,7 @@ $git_branch$git_commit$git_state$git_metrics$git_status\
 ${custom.svn}\
 ${custom.svn_rev}\
 $fill\
-$python$conda\
+$python$conda ${custom.group}\
 $sudo\
 $line_break\
 $shlvl\
@@ -55,9 +55,13 @@ format               = '[@$hostname]($style)'
 
 [directory]
 style                = 'bold green'
-truncate_to_repo     = false
 truncation_length    = 5
 truncation_symbol    = '…/'
+format               = '[$read_only]($read_only_style)[$path]($style) '
+read_only            = '∙'
+read_only_style      = 'bright-red'
+use_os_path_sep      = false
+truncate_to_repo     = false
 
 [git_branch]
 symbol               ='git  '
@@ -121,3 +125,15 @@ when                 = 'svn_branch_info'
 use_stdin            =false
 shell                = ['bash','--noprofile','-c']
 command              = 'svn_branch_info'
+
+
+[custom.group]
+symbol               = ''
+style                ='bold red'
+format               ='[\[$symbol$output\]]($style)'
+
+os                   = 'unix'
+when                 = '[ "$(id -g)" != "$(id -g $USER)" ]'
+use_stdin            = false
+shell                = ['bash','--noprofile','-c']
+command              = 'id -g -n'

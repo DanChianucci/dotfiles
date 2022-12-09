@@ -14,6 +14,7 @@ set  violet="%{\033[0;35m%}"
 set   white="%{\033[0;37m%}"
 set  yellow="%{\033[0;33m%}"
 set     end="%{\033[0m%}"
+
 set default_group=`/bin/id -g -n dchu`
 set group=`/bin/id -g -n`
 if ("$group" != "$default_group") then
@@ -22,7 +23,8 @@ else
     set group
 endif
 
-set prompt = "${red}csh> ${green}%n${green}@%m $group\: ${blue}%~${end} $ "
+set DEFAULT_USER_PROMPT="${red}csh> ${green}%n${green}@%m $group\: ${blue}%~${end} $ "
+set prompt="$DEFAULT_USER_PROMPT"
 
 # Cleanup
 unset default_group group

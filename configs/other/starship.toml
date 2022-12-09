@@ -8,12 +8,20 @@ $git_branch$git_commit$git_state$git_metrics$git_status\
 ${custom.svn}\
 ${custom.svn_rev}\
 $fill\
-$python$conda ${custom.group}\
+${custom.group} ${env_var} $python$conda\
 $sudo\
 $line_break\
 $shlvl\
 $character\
+
 """
+
+# [env_var.lpj]
+# symbol   = 'd'
+# default  = 'd'
+# variable = 'USER'
+#
+#
 
 
 [fill]
@@ -83,9 +91,9 @@ detect_files         = []
 detect_folders       = []
 
 [conda]
-style  = 'yellow'
 symbol = ''
 format = '[((\($symbol$environment\))]($style)'
+style  = 'yellow'
 
 [shlvl]
 threshold  =2
@@ -131,12 +139,31 @@ command              = 'svn_branch_info'
 
 
 [custom.group]
-symbol               = ''
-style                ='bold red'
-format               ='[\[$symbol$output\]]($style)'
+symbol               = '⏚ '
+style                = 'bold red'
+format               = '[\[$symbol$output\]]($style)'
 
 os                   = 'unix'
 when                 = '[ "$(id -g)" != "$(id -g $USER)" ]'
 use_stdin            = false
 shell                = ['bash','--noprofile','-c']
 command              = 'id -g -n'
+
+
+[env_var.lpjWSName]
+symbol  = "⅊ "
+variable = 'lpjWSName'
+style    = 'bold yellow'
+format   = '[(\[$symbol$env_value\])]($style) '
+
+
+
+[custom.bjobs]
+symbol               = ''
+style                ='bold yellow'
+format               ='[\[$symbol$output\]]($style)'
+os                   = 'unix'
+when                 = '(( $(bjobs -noheader | wc -l) > 0 ))'
+use_stdin            = false
+shell                = ['bash','--noprofile','-c']
+command              = 'expr $(bjobs -noheader | wc -l)'

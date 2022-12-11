@@ -1,9 +1,6 @@
 #CurrentUserAllHosts
 
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-(& "C:\Users\dchu\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-#endregion
+
 
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
@@ -58,3 +55,12 @@ function Get-ChildItemHidden { Get-ChildItem -Force }
 Set-Alias -Name "ls"  -Value Get-ChildItemName -Option AllScope
 Set-Alias -Name "ll"  -Value Get-ChildItem
 Set-Alias -Name "ll." -Value Get-ChildItemHidden
+
+
+if(Test-CommandExists conda) {
+    (& "conda" "shell.powershell" "hook") | Out-String | Invoke-Expression
+}
+
+if(Test-CommandExists starship) {
+    Invoke-Expression (&starship init powershell)
+}

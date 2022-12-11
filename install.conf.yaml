@@ -1,6 +1,7 @@
 - defaults:
     link:
       relink: true
+      create: true
 
 - clean: ['~']
 
@@ -22,7 +23,11 @@
     ~/.tmux.conf            : configs/other/tmux.conf
     ~/.condarc              : configs/other/condarc
     ~/.config/starship.toml : configs/other/starship.toml
-    # ~/profile.ps1 : configs/powershell/profile.ps1
+    $PROFILE                :
+        if : "Write-Host ''"
+        path : configs/powershell/Microsoft.Powershell_profile.ps1
+
+
 - shell:
     - [touch ~/.gitconfig.local, Creating the local git config file]
     - [touch ~/.bashrc.local   , Creating the local bashrc file]

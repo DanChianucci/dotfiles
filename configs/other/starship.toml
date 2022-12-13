@@ -92,7 +92,7 @@ detect_folders       = []
 
 [conda]
 symbol = ''
-format = '[((\($symbol$environment\))]($style)'
+format = '[(\($symbol$environment\))]($style)'
 style  = 'yellow'
 
 [shlvl]

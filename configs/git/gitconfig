@@ -1,8 +1,8 @@
 [core]
-  autocrlf = false
-  safecrlf = warn
-  eol      = lf
-  editor   = vim +star
+  autocrlf     = false
+  safecrlf     = warn
+  eol          = lf
+  editor       = vim +star
   excludesfile = ~/.gitignore_global
 
 [user]
@@ -18,7 +18,8 @@
 
   unstage = reset HEAD --
 
-  gdiff = difftool
+  gdiff  = difftool --tool vscode --no-prompt
+  gmerge = mergetool--tool vscode --no-prompt
 
   last = log -1 HEAD
   lol   = log --graph --decorate --pretty=oneline --abbrev-commit
@@ -49,8 +50,15 @@
   changed   = green
   untracked = red
 
+
 [push]
   default = simple
+
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+
+[mergetool "vscode"]
+  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 
 [include]

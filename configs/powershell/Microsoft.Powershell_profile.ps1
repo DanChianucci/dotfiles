@@ -1,9 +1,15 @@
 #CurrentUserAllHosts
 
 
-
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -HistoryNoDuplicates
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
+
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+
 Set-Alias rc Edit-PowershellProfile
 
 $env:PYTHONSTARTUP = "$home\.pythonstartup"
@@ -33,6 +39,16 @@ Function Test-CommandExists {
   Finally {$ErrorActionPreference=$oldPreference}
 }
 
+
+function Get-ChildItemName { Get-ChildItem -Name }
+
+function Get-ChildItemHidden { Get-ChildItem -Force }
+
+Set-Alias -Name "ls"  -Value Get-ChildItemName -Option AllScope
+Set-Alias -Name "ll"  -Value Get-ChildItem
+Set-Alias -Name "ll." -Value Get-ChildItemHidden
+
+
 function Prompt {
     $mywd = (Get-Location).Path
     $mywd = $mywd.Replace( $HOME, '~' )
@@ -48,13 +64,7 @@ function Prompt {
     return " "
 }
 
-function Get-ChildItemName { Get-ChildItem -Name }
 
-function Get-ChildItemHidden { Get-ChildItem -Force }
-
-Set-Alias -Name "ls"  -Value Get-ChildItemName -Option AllScope
-Set-Alias -Name "ll"  -Value Get-ChildItem
-Set-Alias -Name "ll." -Value Get-ChildItemHidden
 
 
 if(Test-CommandExists conda) {

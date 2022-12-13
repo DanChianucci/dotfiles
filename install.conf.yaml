@@ -23,9 +23,7 @@
     ~/.tmux.conf            : configs/other/tmux.conf
     ~/.condarc              : configs/other/condarc
     ~/.config/starship.toml : configs/other/starship.toml
-    $PROFILE                :
-        if : "Write-Host ''"
-        path : configs/powershell/Microsoft.Powershell_profile.ps1
+    $PROFILE                : configs/powershell/profile.ps1
 
 
 - shell:

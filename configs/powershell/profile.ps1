@@ -65,7 +65,10 @@ function Prompt {
 }
 
 
-
+if (Get-Module -ListAvailable -Name DirColors){
+    Import-Module DirColors
+    Update-DirColors ~/.dircolors
+}
 
 if(Test-CommandExists conda) {
     (& "conda" "shell.powershell" "hook") | Out-String | Invoke-Expression

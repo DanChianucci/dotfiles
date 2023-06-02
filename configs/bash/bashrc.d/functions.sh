@@ -193,13 +193,29 @@ function attach() {
 }
 
 
-upscript="$(dirname "${BASH_SOURCE[0]}")/up.py"
+
 function up() {
-  dirname=$($upscript "$@")
+  dirname=$(~/.scripts/up.py "$@")
   retcode="$?"
   if [ $retcode -eq 0 ]; then
     cd "$dirname" || return 102
   else
     return "$retcode"
   fi
+}
+
+
+function vup {
+    dirname=$(~/.scripts/up.py "venv")
+    file="$dirname/venv/bin/activate"
+    [[ -e $file ]] && {
+        echo "$file"
+        source "$file"
+        return
+    }
+    echo "No virtualenv found"
+}
+
+function setenv {
+  export "$1"="$2"
 }

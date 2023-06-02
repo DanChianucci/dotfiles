@@ -1,13 +1,5 @@
 #!/bin/bash
-function svn_parse_rev() {
-    local rev
-    rev="$(svn --non-interactive info --no-newline --show-item revision 2>/dev/null)"
-    if [ "${rev}" != "" ] ; then
-        echo "$rev"
-        return 0
-    fi
-    return 1
-}
+
 
 
 function svn_parse_rooturl() {
@@ -19,7 +11,6 @@ function svn_parse_rooturl() {
     fi
     return 1
 }
-
 
 function svn_parse_reponame() {
     root="$(svn --non-interactive info --no-newline --show-item repos-root-url 2>/dev/null)"|| return 1
@@ -39,7 +30,6 @@ function svn_parse_subrepo() {
     echo "${url}" | sed -n 's/\(\/\(branches\|tags\|releases\|trunk\)\/.*\)//p' | cut -f2 -d'/'
     return 0
 }
-
 
 # Returns the current branch or tag name from the given `svn info` output
 function svn_parse_branch() {
@@ -67,3 +57,54 @@ function svn_parse_branch() {
     fi
     return 1
 }
+
+function svn_parse_rev() {
+    svn --non-interactive info --no-newline --show-item revision
+    return $?
+}
+
+function svn_parse_branchrev() {
+    local branch
+    local rev
+    branch=$(svn_parse_branch)
+    rev=$(svn_parse_rev)
+    echo "${branch} @ ${rev}"
+}
+
+function svn_is_repo(){
+  svn --non-interactive info --depth empty >/dev/null 2>&1
+  return $?
+}
+
+usage() {
+  echo "Usage: svn_branch_info [ -a | --root ] [ -b | --name ]
+                               [ -c | --subrepo ] [ -d | --branch]
+                               [ -r | --rev] [-f | --branchrev]"
+}
+
+
+
+
+
+
+PARSED_ARGUMENTS=$(getopt -o unsbrfh --long root,name,subrepo,branch,rev,branchrev -- "$@")
+VALID_ARGS=$?
+if [[ $VALID_ARGS -ne 0 ]]; then
+    exit 1;
+fi
+
+eval set -- "$PARSED_ARGUMENTS"
+while :
+do
+  case "$1" in
+    -u | --root)     svn_parse_rooturl  ; exit $? ;;
+    -n | --name)     svn_parse_reponame ; exit $? ;;
+    -s | --subrepo)  svn_parse_subrepo  ; exit $? ;;
+    -b | --branch)   svn_parse_branch   ; exit $? ;;
+    -r | --rev )     svn_parse_rev      ; exit $? ;;
+    -f | --branchrev ) svn_parse_branchrev; exit $? ;;
+    --) svn_is_repo; exit $?;;
+    -h) usage; exit 0;;
+    *)  usage; exit 2;;
+  esac
+done

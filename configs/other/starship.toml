@@ -1,146 +1,127 @@
 
 
-format= """\
-($cmd_duration\n)$status\
-$shell\
-$username$hostname : $directory\
-$git_branch$git_commit$git_state$git_metrics$git_status\
-${custom.svn}\
-${custom.svn_rev}\
+format= """(($cmd_duration )($status)\n)\
+$shell$username$hostname : $directory\
+(($git_branch$git_commit$git_state$git_metrics$git_status )(${custom.svn})\
 $fill\
-${custom.group} ${env_var} $python$conda\
-$sudo\
+(${custom.group})\
+(${env_var.LPJ_WS})\
+$fill\
+($python)($conda))\
 $line_break\
+\
 $shlvl\
+$sudo\
 $character\
-
 """
-
-# [env_var.lpj]
-# symbol   = 'd'
-# default  = 'd'
-# variable = 'USER'
-#
-#
+add_newline = true
+continuation_prompt = '[∙](black) '
 
 
 [fill]
 symbol               = ' '
 
+
+###############################################################################
+#<> Status Line
+###############################################################################
+
+[cmd_duration]
+min_time = 2000
+show_milliseconds = false
+format = '[$duration]($style)'
+style = 'yellow'
+
 [status]
 disabled             = false
-symbol               = ''
+symbol               = '' #no-nerdfont: !
 success_symbol       = ''
-style                = 'bold red'
-format               = """[\\($status\\)]($style)
-"""
+style                = 'red'
+format               = "[\\($symbol$status\\)]($style)"
 
+###############################################################################
+#<> Base Prompt
+###############################################################################
 
 [shell]
-bash_indicator       = ''
-powershell_indicator = '\[PS\] '
+bash_indicator       = ''          # 󱆃  
+powershell_indicator = '\[PS\] '  # 
 cmd_indicator        = '\[CMD\] '
 tcsh_indicator       = '\[TCSH\] '
 unknown_indicator    = '\[?SH\] '
-style                = 'bold red'
+style                = 'red'
 format               = """[$indicator]($style)"""
 disabled             = false
 
-
-
-
 [username]
 show_always          = true
-style_user           = 'bold blue'
-style_root           = 'bold cyan'
+style_user           = 'blue'
+style_root           = 'cyan'
 format               = '[$user]($style)'
 
 [hostname]
 ssh_only             = false
-style                = 'bold blue'
+style                = 'blue'
 format               = '[@$hostname]($style)'
 
-
 [directory]
-style                = 'bold green'
+style                = 'green'
 truncation_length    = 5
 truncation_symbol    = '…/'
-format               = '[$path]($style)[( $read_only)]($read_only_style) '
-read_only            = ''
-read_only_style      = 'bright-red'
+format               = '[$path]($style)[($read_only)]($read_only_style) '
+read_only            = ' '  #nonerdfont: 
+read_only_style      = 'red'
 use_os_path_sep      = false
 truncate_to_repo     = false
 
+
+
+
+###############################################################################
+#<> SCM
+###############################################################################
 [git_branch]
-symbol               ='git  '
+symbol               = '  '#no-nerdfont: git 
+style                = 'purple'
 format               = '[\[$symbol$branch\]]($style)'
 
 [git_status]
 format               = '([\[$all_status$ahead_behind\]]($style))'
 
-[nix_shell]
-format               = '\[[$symbol$state( \($name\))]($style)\]'
 
+
+###############################################################################
+#<> Environment Info
+###############################################################################
 [python]
 style = 'yellow'
-symbol               = ''
-format               = '[(\($symbol$virtualenv(:$version)\))]($style)'
-#'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol               = ' ' #no-nerdfont:
+format               = '[(\($symbol$virtualenv\))]($style)'
 detect_extensions    = []
 detect_files         = []
 detect_folders       = []
 
 [conda]
-symbol = ''
+symbol = '󱔎 ' #no-nerdfont:
 format = '[(\($symbol$environment\))]($style)'
 style  = 'yellow'
 
-[shlvl]
-threshold  =2
-symbol     = '↕️'
-format     = '[$symbol$shlvl]($style)' #
-repeat     =false
-style      = 'yellow'
-disabled   = false
-
-
-
-[character]
-format               = '$symbol '
-success_symbol       = '[❯](bold green)'
-error_symbol         = '[❯](bold red)'
-vicmd_symbol         = '[❮](bold green)'
-disabled             = false
-
-
-
-[custom.svn_rev]
-style                ='bold purple'
-symbol               = 'r'
-format               ='[\[$symbol$output\]]($style)'
-
-os                   = 'unix'
-use_stdin            = false
-when                 = 'svn --non-interactive info --no-newline --show-item revision'
-command              = 'svn --non-interactive info --no-newline --show-item revision'
-
-
 
 [custom.svn]
-symbol               = 'svn  '
-style                ='bold purple'
+symbol               = 'svn '
+style                ='purple'
 format               ='[\[$symbol$output\]]($style)'
-
 os                   = 'unix'
-when                 = 'svn_branch_info'
-use_stdin            =false
+use_stdin            = false
 shell                = ['bash','--noprofile','-c']
-command              = 'svn_branch_info'
+when                 = 'svn_branch_info'
+command              = 'svn_branch_info -f'
+description = "SVN status"
 
 
 [custom.group]
-symbol               = '⏚ '
-style                = 'bold red'
+symbol               = '󰡉  '#no-nerdfont: ⏚
+style                = 'red'
 format               = '[\[$symbol$output\]]($style)'
 
 os                   = 'unix'
@@ -148,22 +129,55 @@ when                 = '[ "$(id -g)" != "$(id -g $USER)" ]'
 use_stdin            = false
 shell                = ['bash','--noprofile','-c']
 command              = 'id -g -n'
+description = "The current user group assignment"
 
 
-[env_var.lpjWSName]
-symbol  = "⅊ "
+[env_var.LPJ_WS]
+symbol   = '󰋫 '
+style    = 'red'
+default  = ''
 variable = 'lpjWSName'
-style    = 'bold yellow'
-format   = '[(\[$symbol$env_value\])]($style) '
+format   = '[(\[$symbol$env_value\])]($style)'
+# description="Displays the current LPJ Project Information"
+
 
 
 
 [custom.bjobs]
-symbol               = ''
-style                ='bold yellow'
+symbol               = '' #no-nerdfont: >>
+style                ='yellow'
 format               ='[\[$symbol$output\]]($style)'
 os                   = 'unix'
 when                 = '(( $(bjobs -noheader | wc -l) > 0 ))'
 use_stdin            = false
 shell                = ['bash','--noprofile','-c']
-command              = 'expr $(bjobs -noheader | wc -l)'
+command              = 'expr $(bjobs -noheader 2>/dev/null | wc -l)'
+description = "The number of currently running LSF batch jobs"
+
+
+
+###############################################################################
+#<> Command Entry
+###############################################################################
+[shlvl]
+threshold  = 2
+symbol     = '❮'
+format     = '[$symbol$shlvl]($style)'
+repeat     = false
+style      = 'yellow'
+disabled   = false
+
+
+[sudo]
+format = '[$symbol]($style)'
+symbol = '󰻍 ' #nonerdfont #!
+style  = 'red'
+disabled = false
+
+
+[character]
+format               = '$symbol '
+success_symbol       = '[❯](green)'
+error_symbol         = '[❯](red)'
+vicmd_symbol         = '[❮](green)'
+disabled             = false

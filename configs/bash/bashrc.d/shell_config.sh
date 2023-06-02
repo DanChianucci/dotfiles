@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+SHELL="$(which "$(ps -o comm= -p $$)")"
+
+
 shopt -s extglob
 shopt -s histappend    #append don't overwrite historyfile
 shopt -s checkwinsize  #Check Win size after each command
@@ -10,13 +13,16 @@ shopt -s cmdhist
 
 { test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"; } &>/dev/null
 
-export HISTTIMEFORMAT='%T     '
-export HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
-export HISTCONTROL='erasedups:ignoreboth'
+HISTTIMEFORMAT='%T     '
+HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
+HISTCONTROL='erasedups:ignoreboth'
 
-export PYTHONSTARTUP="$HOME/.pythonstartup"
+PYTHONSTARTUP="$HOME/.pythonstartup"
 
+GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export SHELL  HISTTIMEFORMAT HISTIGNORE HISTCONTROL PYTHONSTARTUP GCC_COLORS
 
 bind -f ~/.inputrc
+
+pathmunge ~/.scripts

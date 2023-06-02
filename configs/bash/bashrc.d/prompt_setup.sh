@@ -65,11 +65,6 @@ function set_prompt () {
         PS1+="$(CUSTOM_PS1_PATH)"
     fi
 
-    scm_prompt=$(git_branch_info || svn_branch_info)
-    if [ -n "$scm_prompt" ]; then
-        PS1+=$(colorize yellow "($scm_prompt) ")
-    fi
-
     if [[ $(type -t CUSTOM_PS1_TRAIL) == "function" ]]; then
         PS1+="$(CUSTOM_PS1_TRAIL)"
     fi

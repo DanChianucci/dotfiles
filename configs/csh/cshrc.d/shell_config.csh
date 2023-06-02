@@ -20,6 +20,9 @@ set histdup=erase # remove duplicate commands
 set savehist=(2000 merge)
 
 
+set SHELL=`ps -o comm= -p $$`
+set SHELL=`which $SHELL`
+
 
 # Key binding not working? Try typing 'cat' in the terminal
 # and then hit the key you wish to bind. It should print the
@@ -28,15 +31,13 @@ set savehist=(2000 merge)
 # you wish to bind for backward history search and so on.
 
 # bind -f ~/.inputrc
-bindkey "\e[3~"  delete-char             #DELETE
-bindkey "\e[1~"  beginning-of-line       #HOME
-bindkey "\e[5~"  end-of-line             #END
-bindkey "\e[A"   history-search-backward #UP
-bindkey "\e[B"   history-search-forward  #DOWN
-bindkey "\e[C"   forward-char            #RIGHT
-bindkey "\e[D"   backward-char           #LEFT
-
-
+bindkey  "\e[3~"   delete-char               # DELETE
+#bindkey "\e[1~"   beginning-of-line         # HOME
+#bindkey "\e[5~"   end-of-line               # END
+bindkey -k up      history-search-backward   # UP
+bindkey -k down    history-search-forward    # DOWN
+bindkey -k left    backward-char             # LEFT
+bindkey -k right   forward-char              # RIGHT
 
 
 setenv GCC_COLORS 'error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -46,3 +47,5 @@ setenv PYTHONSTARTUP "$HOME/.pythonstartup"
 if (-r ~/.dircolors) then
     eval "`dircolors -c ~/.dircolors`" >& /dev/null
 endif
+
+pathmunge ~/.scripts

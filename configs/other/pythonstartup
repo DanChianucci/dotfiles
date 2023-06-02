@@ -11,16 +11,18 @@ from pprint import pprint
 def try_import(package, name=None):
     try:
         name = package if name is None else name
-        globals()[name] =   __import__(package, fromlist=[""])
+        globals()[name] = __import__(package, fromlist=[""])
     except ImportError:
         pass
-
 
 
 sys.path.append(os.getenv("PWD"))
 
 ANSI_COLS = {"black": 30, "red": 31, "green": 32, "yellow": 33,
              "blue": 34, "purple": 35, "cyan": 36, "white": 37}
+
+
+
 
 
 def ansi_colorize(text, color, state, prompt=False):
@@ -70,10 +72,17 @@ def setup_prompt():
         sys.ps2 = CustomPS2()
 
 
+def setup_pretty():
+    try:
+        from rich import pretty
+        pretty.install()
+    except ImportError:
+        pass
 
 def setup_readline():
     try:
         import readline
+
         def rl_autoindent():
             """
             Auto-indent upon typing a new line according to the contents of the
@@ -125,12 +134,14 @@ def setup_windows_color():
         import ctypes
         kernel32 = ctypes.windll.kernel32
         kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
-    except (ImportError,AttributeError):
+    except (ImportError, AttributeError):
         pass
 
 ################################################################################
 # Custom No Argument Commends
 ################################################################################
+
+
 def clearscreen():
     try:
         return '\r'
@@ -144,7 +155,7 @@ class FuncCaller:
         self.func = partial(func, *args, **kwargs)
 
     def __call__(self, *args, **kwargs):
-        return self.func(*args,**kwargs)
+        return self.func(*args, **kwargs)
 
     __repr__ = __call__
 
@@ -155,11 +166,13 @@ if __name__ == "__main__":
     __builtins__.clear = FuncCaller(clearscreen)
     __builtins__.exit = FuncCaller(sys.exit)
 
-    try_import("numpy","np")
-    try_import("pandas","pd")
-    try_import("matplotlib","mpl")
-    try_import("matplotlib.pyplot","plt")
+    try_import("numpy", "np")
+    try_import("pandas", "pd")
+    try_import("matplotlib", "mpl")
+    try_import("matplotlib.pyplot", "plt")
+    try_import("rich")
 
+    setup_pretty()
     setup_readline()
     setup_prompt()
     setup_windows_color()

@@ -29,16 +29,32 @@ except ValueError:
 p = "-P" if args.physical else "-L"
 orig_dir = cwd(p)
 
+
+
+
 target = None
 if isinstance(param, int):
     if param >0:
         target = os.path.normpath(os.path.join(orig_dir,"../"*param))
-else:
+
+
+if target is None:
+    SEARCHDIRS = os.getenv("UPDIRS","").split(os.pathsep)
+    for S in SEARCHDIRS:
+        searchdir  = os.path.expanduser(os.path.expandvars(S))
+        check_path = os.path.join(searchdir,param)
+        if os.path.exists(check_path):
+            if os.path.isdir(check_path) and not args.parent:
+                target = check_path
+            else:
+                target = searchdir
+
+
+if target is None:
     currdir = orig_dir
     while os.path.dirname(currdir) != currdir: #check if its root
         check_path = os.path.join(currdir,param)
         if os.path.exists(check_path):
-            target = currdir
             if os.path.isdir(check_path) and not args.parent:
                 target = check_path
             else:
@@ -46,6 +62,7 @@ else:
             break
         else:
             currdir = os.path.normpath(os.path.join(currdir,".."))
+
 
 if target is None:
     exit(101)

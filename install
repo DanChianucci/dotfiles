@@ -5,6 +5,5 @@ set -e
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="install.conf.yaml"
 
-
-
+export PROFILE="~/.config/powershell/Microsoft.PowerShell_profile.ps1"
 dotbot -d "${BASEDIR}" -c "${CONFIG}" "${@}"

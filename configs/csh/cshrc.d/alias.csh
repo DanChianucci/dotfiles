@@ -39,3 +39,17 @@ alias fbacks 'find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc"
 alias rmb    'rm `fbacks`'
 
 alias weather "curl wttr.in"
+
+
+alias up 'set __dirname=`~/.scripts/up.py \!*` && cd $__dirname; unset __dirname'
+
+alias vup 'set __dirname=`~/.scripts/up.py venv`; \\
+           set __filename="$__dirname/bin/activate.csh"; \\
+           if ( -e "$__filename" ) echo "$__filename" && source "$__filename"; \\
+           if ( ! -e "$__filename") echo "No virtualenv found"; \\
+           unset __dirname; \\
+           unset __filename;'
+
+
+alias varmunge   'source ~/.scripts/varmunge.csh'
+alias pathmunge  'varmunge PATH'

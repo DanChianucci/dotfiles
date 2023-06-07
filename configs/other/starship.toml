@@ -1,7 +1,7 @@
 
 
 format= """(($cmd_duration )($status)\n)\
-$shell$username$hostname : $directory\
+$os$shell$username$hostname : $directory\
 (($git_branch$git_commit$git_state$git_metrics$git_status )(${custom.svn})\
 $fill\
 (${custom.group})\
@@ -44,14 +44,19 @@ format               = "[\\($symbol$status\\)]($style)"
 ###############################################################################
 
 [shell]
-bash_indicator       = ''          # 󱆃  
-powershell_indicator = '\[PS\] '  # 
-cmd_indicator        = '\[CMD\] '
-tcsh_indicator       = '\[TCSH\] '
-unknown_indicator    = '\[?SH\] '
+bash_indicator       = '  '#'\[PS\]     #  󱆃
+powershell_indicator = '  '#'\[PS\] '   #
+cmd_indicator        = '  '#'\[CMD\] '  #
+tcsh_indicator       = '󰯱  '#'\[TCSH\] ' # 󰯱
+unknown_indicator    = '  '#'\[?SH\] '  #
 style                = 'red'
 format               = """[$indicator]($style)"""
 disabled             = false
+
+[os]
+style    = "black"
+format   = "[$symbol ]($style)"
+disabled = false
 
 [username]
 show_always          = true
@@ -181,3 +186,49 @@ success_symbol       = '[❯](green)'
 error_symbol         = '[❯](red)'
 vicmd_symbol         = '[❮](green)'
 disabled             = false
+
+
+
+[os.symbols]
+Amazon           = " "
+Android          = " "
+Arch             = " "
+Artix            = " "
+CentOS           = " "
+Debian           = " "
+EndeavourOS      = " "
+Fedora           = " "
+FreeBSD          = " "
+Gentoo           = " "
+Illumos          = " "
+Linux            = "󰌽 "
+Macos            = " "
+Manjaro          = " "
+Mint             = " "
+NixOS            = " "
+OpenBSD          = " "
+openSUSE         = " "
+Pop              = " "
+Raspbian         = " "
+Redhat           = "󱄛 "
+RedHatEnterprise = "󱄛 "
+Solus            = " "
+SUSE             = " "
+Ubuntu           = " "
+
+
+Windows          = " "
+HardenedBSD      = " "
+MidnightBSD      = " "
+NetBSD           = "󰈿 "
+Emscripten       = " "
+OpenCloudOS      = " "
+openEuler        = "󰏒 "
+Redox            = "󰙨 " #
+Unknown          = " "
+Mabox            = " " #
+Mariner          = "󰠳 "
+Garuda           = "󱗆 "
+
+DragonFly        = "🐉"
+OracleLinux      = "🦴"

@@ -6,7 +6,6 @@ SHELL="$(which "$(ps -o comm= -p $$)")"
 shopt -s extglob
 shopt -s histappend    #append don't overwrite historyfile
 shopt -s checkwinsize  #Check Win size after each command
-shopt -s histappend
 shopt -s cmdhist
 
 #PROMPT_DIRTRIM=3
@@ -16,6 +15,7 @@ shopt -s cmdhist
 HISTTIMEFORMAT='%T     '
 HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
 HISTCONTROL='erasedups:ignoreboth'
+HISTFILE="$HOME/.bash_history"
 
 PYTHONSTARTUP="$HOME/.pythonstartup"
 

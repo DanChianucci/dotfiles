@@ -74,4 +74,6 @@ function set_prompt () {
     history -a;
 
 }
-PROMPT_COMMAND='set_prompt'
+
+
+PROMPT_COMMAND='history -a; history -c; history -r; set_prompt'

@@ -53,3 +53,6 @@ alias vup 'set __dirname=`~/.scripts/up.py venv`; \\
 
 alias varmunge   'source ~/.scripts/varmunge.csh'
 alias pathmunge  'varmunge PATH'
+
+
+alias clearhist 'rm $histfile && history -c'

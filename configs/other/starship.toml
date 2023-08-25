@@ -1,22 +1,27 @@
 
 
 format= """(($cmd_duration )($status)\n)\
-$os$shell$username$hostname : $directory\
+$shell$username$hostname $os: $directory\
 (($git_branch$git_commit$git_state$git_metrics$git_status )(${custom.svn})\
 $fill\
 (${custom.group})\
 (${env_var.LPJ_WS})\
 $fill\
+$sudo\
 ($python)($conda))\
 $line_break\
 \
 $shlvl\
-$sudo\
 $character\
 """
+palette = 'mine'
 add_newline = true
 continuation_prompt = '[∙](black) '
 
+
+[palettes.mine]
+orange = "#d08770"
+brown  = "#9c7265"
 
 [fill]
 symbol               = ' '
@@ -44,19 +49,16 @@ format               = "[\\($symbol$status\\)]($style)"
 ###############################################################################
 
 [shell]
-bash_indicator       = '  '#'\[PS\]     #  󱆃
-powershell_indicator = '  '#'\[PS\] '   #
-cmd_indicator        = '  '#'\[CMD\] '  #
-tcsh_indicator       = '󰯱  '#'\[TCSH\] ' # 󰯱
-unknown_indicator    = '  '#'\[?SH\] '  #
+bash_indicator       = '[ ](green)' #'\[PS\]     #  󱆃
+powershell_indicator = '[ ](blue)'  #'\[PS\] '   #
+cmd_indicator        = '[ ](blue)'  #'\[CMD\] '  #
+tcsh_indicator       = '[󰯱 ](yellow)' #'\[TCSH\] ' # 󰯱
+unknown_indicator    = '[ ](red)'    #'\[?SH\] '  #
 style                = 'red'
 format               = """[$indicator]($style)"""
 disabled             = false
 
-[os]
-style    = "black"
-format   = "[$symbol ]($style)"
-disabled = false
+
 
 [username]
 show_always          = true
@@ -68,6 +70,13 @@ format               = '[$user]($style)'
 ssh_only             = false
 style                = 'blue'
 format               = '[@$hostname]($style)'
+
+
+[os]
+style    = "white"
+format   = "[$symbol]($style)"
+disabled = false
+
 
 [directory]
 style                = 'green'
@@ -190,45 +199,44 @@ disabled             = false
 
 
 [os.symbols]
-Amazon           = " "
-Android          = " "
-Arch             = " "
-Artix            = " "
-CentOS           = " "
-Debian           = " "
-EndeavourOS      = " "
-Fedora           = " "
-FreeBSD          = " "
-Gentoo           = " "
-Illumos          = " "
-Linux            = "󰌽 "
-Macos            = " "
-Manjaro          = " "
-Mint             = " "
-NixOS            = " "
-OpenBSD          = " "
-openSUSE         = " "
-Pop              = " "
-Raspbian         = " "
-Redhat           = "󱄛 "
-RedHatEnterprise = "󱄛 "
-Solus            = " "
-SUSE             = " "
-Ubuntu           = " "
+Amazon           = "[ ](orange)"
+Android          = "[ ](green)"
+Arch             = "[ ](blue)"
+Artix            = "[ ](blue)"
+CentOS           = "[ ](purple)"
+Debian           = "[ ](red)"
+EndeavourOS      = "[ ]()"
+Fedora           = "[ ](blue)"
+FreeBSD          = "[ ](red)"
+Gentoo           = "[ ](blue)"
+Illumos          = "[ ]()"
+Linux            = "[󰌽 ](black)"
+Macos            = "[ ](white)"
+Manjaro          = "[ ]()"
+Mint             = "[ ](green)"
+NixOS            = "[ ](blue)"
+OpenBSD          = "[ ]()"
+openSUSE         = "[ ](green)"
+SUSE             = "[ ](green)"
+Pop              = "[ ]()"
+Raspbian         = "[ ](red)"
+Redhat           = "[󱄛 ](red)"
+RedHatEnterprise = "[󱄛 ](red)"
+Solus            = "[ ]()"
+Ubuntu           = "[ ](orange)"
 
 
-Windows          = " "
-HardenedBSD      = " "
-MidnightBSD      = " "
-NetBSD           = "󰈿 "
-Emscripten       = " "
-OpenCloudOS      = " "
-openEuler        = "󰏒 "
-Redox            = "󰙨 " #
-Unknown          = " "
-Mabox            = " " #
-Mariner          = "󰠳 "
-Garuda           = "󱗆 "
-
-DragonFly        = "🐉"
-OracleLinux      = "🦴"
+Windows          = "[ ](white)"
+HardenedBSD      = "[ ]()"
+MidnightBSD      = "[ ](black)"
+NetBSD           = "[󰈿 ](red)"
+Emscripten       = "[ ](black)"
+OpenCloudOS      = "[ ]()"
+openEuler        = "[󰏒 ](brown)"
+Redox            = "[󰙨 ](green)" #
+Unknown          = "[ ]()"
+Mabox            = "[ ](brown)" #
+Mariner          = "[󰠳 ](brown)"
+Garuda           = "[󱗆 ]()"
+DragonFly        = "[🐉]()"
+OracleLinux      = "[🦴]()"

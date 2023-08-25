@@ -15,13 +15,13 @@ set notify
 
 
 # Syncronize history between all terminals
+set histfile="$HOME/.tcsh_history"
 set history=2000  # save last 2000 commands
-set histdup=erase # remove duplicate commands
-set savehist=(2000 merge)
+# set histdup=erase # remove duplicate commands
+# set savehist=(2000 merge)
 
 
-set SHELL=`ps -o comm= -p $$`
-set SHELL=`which $SHELL`
+set SHELL=`which $0`
 
 
 # Key binding not working? Try typing 'cat' in the terminal

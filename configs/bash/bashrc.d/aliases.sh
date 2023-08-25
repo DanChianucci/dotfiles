@@ -38,3 +38,6 @@ alias fbacks='find . -name "*.s" -o -name "*.bak" -o -name "*~" -o -name "*.pyc"
 alias rmb='rm $(fbacks)'
 
 alias weather="curl wttr.in"
+
+
+alias clearhist='rm $HISTFILE && history -c'

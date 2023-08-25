@@ -77,8 +77,8 @@ function svn_is_repo(){
 }
 
 usage() {
-  echo "Usage: svn_branch_info [ -a | --root ] [ -b | --name ]
-                               [ -c | --subrepo ] [ -d | --branch]
+  echo "Usage: svn_branch_info [ -u | --root ] [ -n | --name ]
+                               [ -s | --subrepo ] [ -b | --branch]
                                [ -r | --rev] [-f | --branchrev]"
 }
 

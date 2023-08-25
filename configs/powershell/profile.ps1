@@ -40,6 +40,8 @@ Function Test-CommandExists {
 }
 
 
+Set-Alias -Name "which" -Value Get-Command
+
 function Get-ChildItemName { Get-ChildItem -Name }
 
 function Get-ChildItemHidden { Get-ChildItem -Force }
@@ -47,6 +49,7 @@ function Get-ChildItemHidden { Get-ChildItem -Force }
 Set-Alias -Name "ls"  -Value Get-ChildItemName -Option AllScope
 Set-Alias -Name "ll"  -Value Get-ChildItem
 Set-Alias -Name "ll." -Value Get-ChildItemHidden
+
 
 
 function Prompt {

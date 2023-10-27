@@ -120,6 +120,35 @@ symbol = '󱔎 ' #no-nerdfont:
 format = '[(\($symbol$environment\))]($style)'
 style  = 'yellow'
 
+###############################################################################
+#<> Command Entry
+###############################################################################
+[shlvl]
+threshold  = 2
+symbol     = '❮'
+format     = '[$symbol$shlvl]($style)'
+repeat     = false
+style      = 'yellow'
+disabled   = false
+
+
+[sudo]
+format = '[$symbol]($style)'
+symbol = '󰻍 ' #nonerdfont #!
+style  = 'red'
+disabled = false
+
+
+[character]
+format               = '$symbol '
+success_symbol       = '[❯](green)'
+error_symbol         = '[❯](red)'
+vimcmd_symbol         = '[❮](green)'
+disabled             = false
+
+###############################################################################
+#<> Custom
+###############################################################################
 
 [custom.svn]
 symbol               = 'svn '
@@ -171,33 +200,8 @@ description = "The number of currently running LSF batch jobs"
 
 
 ###############################################################################
-#<> Command Entry
+#<> OS
 ###############################################################################
-[shlvl]
-threshold  = 2
-symbol     = '❮'
-format     = '[$symbol$shlvl]($style)'
-repeat     = false
-style      = 'yellow'
-disabled   = false
-
-
-[sudo]
-format = '[$symbol]($style)'
-symbol = '󰻍 ' #nonerdfont #!
-style  = 'red'
-disabled = false
-
-
-[character]
-format               = '$symbol '
-success_symbol       = '[❯](green)'
-error_symbol         = '[❯](red)'
-vicmd_symbol         = '[❮](green)'
-disabled             = false
-
-
-
 [os.symbols]
 Amazon           = "[ ](orange)"
 Android          = "[ ](green)"
@@ -238,5 +242,5 @@ Unknown          = "[ ]()"
 Mabox            = "[ ](brown)" #
 Mariner          = "[󰠳 ](brown)"
 Garuda           = "[󱗆 ]()"
-DragonFly        = "[🐉]()"
-OracleLinux      = "[🦴]()"
+DragonFly        = "[ ]()"
+OracleLinux      = "[ ]()"

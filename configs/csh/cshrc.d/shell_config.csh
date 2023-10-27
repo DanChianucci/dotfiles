@@ -16,11 +16,12 @@ set notify
 
 # Syncronize history between all terminals
 set histfile="$HOME/.tcsh_history"
-set history=2000  # save last 2000 commands
-# set histdup=erase # remove duplicate commands
-# set savehist=(2000 merge)
+set history=500  # save last 2000 commands
+set histdup=erase # remove duplicate commands
+set savehist=($history merge lock)
 
-
+#Variable Not Used by csh, but clean_tcsh_history.py script uses it.
+set histignore='cd:l:l.:la.:ll:ll.:lla.:ls:clear:history'
 set SHELL=`which $0`
 
 

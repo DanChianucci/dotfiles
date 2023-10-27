@@ -13,7 +13,7 @@ shopt -s cmdhist
 { test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"; } &>/dev/null
 
 HISTTIMEFORMAT='%T     '
-HISTIGNORE='&:[ ]*:ls:pwd:cls:clear:clc:history:ll:histg:cd'
+HISTIGNORE='&:[ \t]*:cd:l:l.:la.:ll:ll.:lla.:ls:clear:history'
 HISTCONTROL='erasedups:ignoreboth'
 HISTFILE="$HOME/.bash_history"
 

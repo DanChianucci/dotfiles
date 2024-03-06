@@ -35,7 +35,6 @@ function colorize() {
   echo -e "\[$fg_c\]$2\[$fg_rst\]"
 }
 
-
 function set_prompt () {
     local last_command=$?
     PS1=''
@@ -76,4 +75,9 @@ function set_prompt () {
 }
 
 
-PROMPT_COMMAND='history -a; history -c; history -r; set_prompt'
+if which starship &> /dev/null; then
+    PROMPT_COMMAND='history -a; history -c; history -r;'
+    eval "$(starship init bash)"
+else
+    PROMPT_COMMAND='history -a; history -c; history -r; set_prompt'
+fi

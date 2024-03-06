@@ -6,23 +6,30 @@
 - clean: ['~']
 
 - link:
+    ~/.bashrc                  : configs/bash/bashrc
+    ~/.profile                 : configs/bash/profile
+    ~/.config/bashrc.d         : configs/bash/bashrc.d
+
+    ~/.cshrc                   : configs/csh/cshrc
+    ~/.config/cshrc.d          : configs/csh/cshrc.d
+
+    ~/.vimrc                   : configs/other/vimrc
+    ~/.config/nvim             : configs/nvim
+
     ~/.gitconfig               : configs/git/gitconfig
     ~/.gitignore_global        : configs/git/gitignore_global
-    ~/.config/bashrc.d         : configs/bash/bashrc.d
-    ~/.profile                 : configs/bash/profile
-    ~/.bashrc                  : configs/bash/bashrc
-    ~/.config/cshrc.d          : configs/csh/cshrc.d
-    ~/.cshrc                   : configs/csh/cshrc
+
     ~/.inputrc                 : configs/other/inputrc
     ~/.dircolors               : configs/other/dircolors
     ~/.pythonstartup           : configs/other/pythonstartup
-    ~/.vimrc                   : configs/other/vimrc
     ~/.tmux.conf               : configs/other/tmux.conf
     ~/.condarc                 : configs/other/condarc
     ~/.config/starship.toml    : configs/other/starship.toml
+
     ~/.scripts/varmunge.csh    : scripts/varmunge.csh
     ~/.scripts/up.py           : scripts/up.py
     ~/.scripts/svn_branch_info : scripts/svn_branch_info
+
     $PROFILE                   : configs/powershell/profile.ps1
 
 

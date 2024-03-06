@@ -8,7 +8,7 @@ $fill\
 (${env_var.LPJ_WS})\
 $fill\
 $sudo\
-($python)($conda))\
+($python)($conda) )\
 $line_break\
 \
 $shlvl\

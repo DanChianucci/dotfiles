@@ -1,6 +1,10 @@
 #! /usr/bin/env bash
 
-SHELL="$(which "$(ps -o comm= -p $$)")"
+#ps doesn't support the -o option always
+#if so just leave shell as default
+if ps -o comm= -p $$ &> /dev/null; then
+    SHELL="$(which "$(ps -o comm= -p $$)")"
+fi
 
 
 shopt -s extglob

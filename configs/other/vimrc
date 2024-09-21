@@ -32,10 +32,12 @@
 "  Run :PlugInstall
 " https://github.com/junegunn/vim-plug
 "<<<
+if ! empty(globpath(&rtp, 'autoload/plug.vim'))
     call plug#begin()
         Plug 'arcticicestudio/nord-vim'
         Plug 'vhda/verilog_systemverilog.vim'
     call plug#end()
+endif
 ">>>
 
 

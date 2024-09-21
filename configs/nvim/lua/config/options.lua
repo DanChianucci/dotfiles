@@ -2,16 +2,15 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-
 vim.opt.cursorline = true
 vim.opt.guicursor = ''
 vim.opt.mouse = ''
 vim.opt.mousescroll = 'ver:0,hor:0'
-vim.opt.showmode = false
+vim.opt.showmode = true
 vim.o.conceallevel = 2
 
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

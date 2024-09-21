@@ -1,16 +1,15 @@
 #CurrentUserAllHosts
 
-
+Set-PSReadlineOption -EditMode Emacs
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -HistoryNoDuplicates
 
-Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadLineKeyHandler -Key Tab -Function Complete
+# Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key Tab -Function AcceptSuggestion
 
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
-Set-Alias rc Edit-PowershellProfile
 
 $env:PYTHONSTARTUP = "$home\.pythonstartup"
 
@@ -40,15 +39,17 @@ Function Test-CommandExists {
 }
 
 
-Set-Alias -Name "which" -Value Get-Command
+
 
 function Get-ChildItemName { Get-ChildItem -Name }
-
 function Get-ChildItemHidden { Get-ChildItem -Force }
 
-Set-Alias -Name "ls"  -Value Get-ChildItemName -Option AllScope
-Set-Alias -Name "ll"  -Value Get-ChildItem
-Set-Alias -Name "ll." -Value Get-ChildItemHidden
+
+Set-Alias -name "rc"    -Value Edit-PowershellProfile
+Set-Alias -Name "which" -Value Get-Command
+Set-Alias -Name "ls"    -Value Get-ChildItemName -Option AllScope
+Set-Alias -Name "ll"    -Value Get-ChildItem
+Set-Alias -Name "ll."   -Value Get-ChildItemHidden
 
 
 
@@ -67,16 +68,16 @@ function Prompt {
     return " "
 }
 
+if(Test-CommandExists starship) {
+    Invoke-Expression (&starship init powershell)
+}
+
 
 if (Get-Module -ListAvailable -Name DirColors){
     Import-Module DirColors
     Update-DirColors ~/.dircolors
 }
 
-if(Test-CommandExists conda) {
-    (& "conda" "shell.powershell" "hook") | Out-String | Invoke-Expression
-}
-
-if(Test-CommandExists starship) {
-    Invoke-Expression (&starship init powershell)
+if(Test-CommandExists conda.exe) {
+    (& "conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 }

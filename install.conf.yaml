@@ -29,6 +29,7 @@
     ~/.scripts/varmunge.csh    : scripts/varmunge.csh
     ~/.scripts/up.py           : scripts/up.py
     ~/.scripts/svn_branch_info : scripts/svn_branch_info
+    ~/.scripts/format_json.py  : scripts/format_json.py
 
     $PROFILE                   : configs/powershell/profile.ps1
 

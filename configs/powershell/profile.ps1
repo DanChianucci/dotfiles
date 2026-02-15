@@ -78,6 +78,15 @@ if (Get-Module -ListAvailable -Name DirColors){
     Update-DirColors ~/.dircolors
 }
 
+# Add ~/.local\bin to PATH for this session (if it exists and isn't already in PATH)
+$localBin = Join-Path $HOME '.local\bin'
+if (Test-Path $localBin) {
+    $paths = $env:Path -split ';'
+    if (-not ($paths -contains $localBin)) {
+        $env:Path = "$localBin;$env:Path"
+    }
+}
+
 if(Test-CommandExists conda.exe) {
     (& "conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 }
